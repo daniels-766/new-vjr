@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Panggilan SIP</title>
+	<script src="https://cdn.jsdelivr.net/npm/jssip/dist/jssip.min.js"></script>
+</head>
+<body>
+	<h3>Memanggil: {{ nomor }}</h3>
+	<audio id="remoteAudio" autoplay></audio>
+	<button onclick="hangup()">Akhiri Panggilan</button>
+
+	<script>
+		const socket = new JsSIP.WebSocketInterface('wss://{{ sip_server }}/ws'); // Ubah jika pakai ws atau wss
+		const configuration = {
+			sockets: [socket],
+			uri: 'sip:{{ username }}@{{ domain }}',
+			password: '{{ password }}',
+			session_timers: false
+		};
+
+		const ua = new JsSIP.UA(configuration);
+		ua.start();
+
+		let session;
+
+		ua.on('connected', function() {
+			console.log("SIP connected.");
+		});
+
+		ua.on('registered', function() {
+			console.log("SIP registered.");
+
+			const eventHandlers = {
+				progress: function(e) { console.log('calling...'); },
+				failed: function(e) { console.log('call failed', e); },
+				ended: function(e) { console.log('call ended'); },
+				confirmed: function(e) { console.log('call confirmed'); }
+			};
+
+			const options = {
+				eventHandlers: eventHandlers,
+				mediaConstraints: { audio: true, video: false }
+			};
+
+			session = ua.call('sip:{{ nomor }}@{{ domain }}', options);
+			session.connection.addEventListener("addstream", function(e) {
+				document.getElementById('remoteAudio').srcObject = e.stream;
+			});
+		});
+
+		function hangup() {
+			if (session) session.terminate();
+			window.close();
+		}
+	</script>
+</body>
+</html>
