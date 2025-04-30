@@ -689,10 +689,6 @@ Terima kasih
 					function callWithMicroSIP() {
 						let nomor = document.getElementById("modalNomorTelepon").innerText.trim();
 					
-						if (!nomor.startsWith("0")) {
-							nomor = "0" + nomor;
-						}
-					
 						const domain = "ld.infin8link.com:7060";
 						const sipURL = `sip:${nomor}@${domain}`;
 						

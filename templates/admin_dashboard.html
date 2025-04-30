@@ -135,16 +135,6 @@
 										</a>
 									</div>
 								</div>
-								<div class="menu-item">
-									<a class="menu-link" href="{{ url_for('log_user') }}">
-										<span class="menu-icon">
-											<span class="svg-icon svg-icon-2">
-												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#ffffff" d="M40 48C26.7 48 16 58.7 16 72l0 48c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24l0-48c0-13.3-10.7-24-24-24L40 48zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L192 64zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-288 0zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-288 0zM16 232l0 48c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24l0-48c0-13.3-10.7-24-24-24l-48 0c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24l0 48c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24l0-48c0-13.3-10.7-24-24-24l-48 0z"/></svg>
-											</span>
-										</span>
-										<span class="menu-title">Log History</span>
-									</a>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -163,22 +153,27 @@
 								</div>
 							</div>
 							<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-								<a href="../dist/index.html" class="d-lg-none">
+								<span class="d-lg-none">
 									<img alt="Logo" src="../static/assets/media/logos/logo-2.svg" class="h-30px" />
-								</a>
+								</span>
 							</div>
 							<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
 								<div class="d-flex align-items-stretch" id="kt_header_nav">
 									<div class="header-menu align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_header_menu_mobile_toggle" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
 										<div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
 											<div class="menu-item me-lg-1">
-												<a class="menu-link active py-3" href="#">
+												<span class="menu-link active py-3">
 													<span class="menu-title">Home</span>
-												</a>
+												</span>
 											</div>
 											<div class="menu-item me-lg-1">
 												<a class="menu-link py-3" href="{{ url_for('manage_users') }}">
 													<span class="menu-title">Manage Account</span>
+												</a>
+											</div>
+											<div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('log_user') }}">
+													<span class="menu-title">Log History</span>
 												</a>
 											</div>
 										</div>

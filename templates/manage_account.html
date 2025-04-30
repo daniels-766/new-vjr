@@ -569,9 +569,9 @@
                         <label for="account-id" class="form-label">Nama Akun</label>
                         <select class="form-select" id="account-username" name="user_id" required>
                             <option value="">-- Select Akun --</option>
-                            {% for user in users_all %}
-                              <option value="{{ user.id }}">{{ user.id_system }}</option>
-                            {% endfor %}
+                            {% for user in users %}
+								<option value="{{ user.id }}">{{ user.id_system }}</option>
+							{% endfor %}
                           </select>                          
                       </div>
                       <div class="mb-3">

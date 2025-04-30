@@ -361,7 +361,6 @@ def manage_users():
                             num_sip=current_user.num_sip,
                             pas_sip=current_user.pas_sip)
 
-
 @app.route('/delete-group', methods=['POST'])
 @login_required
 def delete_group():
@@ -393,7 +392,6 @@ def delete_group():
         flash(f'Error: {str(e)}', 'danger')
 
     return redirect(url_for('manage_users'))
-
 
 @app.route('/delete-account', methods=['POST'])
 def delete_account():
@@ -788,10 +786,14 @@ def my_data():
     query_params = request.args.to_dict()
     query_params.pop('page', None)
 
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
     return render_template(
         'user_my_case.html',
         username=current_user.username,
         group=current_user.group,
+        group_name=group_name,
         id_system=current_user.id_system,
         data_list=paginated_data,
         current_page=page,
@@ -894,10 +896,16 @@ def user_ptp():
     query_params = request.args.to_dict()
     query_params.pop('page', None)
 
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
     return render_template(
         'user_ptp.html',  
         username=current_user.username,
         data_list=paginated_data,
+        group=current_user.group,
+        group_name=group_name,
+        id_system=current_user.id_system,
         current_page=page,
         total_pages=total_pages,
         query_params=query_params,
@@ -1061,4 +1069,4 @@ def log_user():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, port=5000,host='0.0.0.0')  
+    app.run(debug=True, port=5000, host='0.0.0.0')  
