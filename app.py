@@ -17,6 +17,7 @@ from sqlalchemy.sql import func
 from flask import render_template
 from flask_apscheduler import APScheduler
 from flask import jsonify
+import pymysql
 
 ALLOWED_EXTENSIONS = {'xls', 'xlsx'}
 
@@ -1069,4 +1070,5 @@ def log_user():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+        pymysql.install_as_MySQLdb()
     app.run(debug=True, port=5000, host='0.0.0.0')  
