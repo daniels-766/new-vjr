@@ -368,7 +368,16 @@
               window.open(url, '_blank');
             }
           </script>
-          
+          <script>
+			document.getElementById('togglePassword').addEventListener('click', function () {
+			  const passwordInput = document.getElementById('pas_sip');
+			  const icon = document.getElementById('toggleIcon');
+			  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+			  passwordInput.setAttribute('type', type);
+			  icon.classList.toggle('bi-eye');
+			  icon.classList.toggle('bi-eye-slash');
+			});
+		  </script>
 	</body>
 	<!--end::Body-->
 </html>

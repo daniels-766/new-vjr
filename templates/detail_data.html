@@ -239,7 +239,7 @@
 											<!--begin::Menu-->
 											<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-200px" data-kt-menu="true">
 												<div class="menu-item px-5 my-1">
-													<a href="../dist/account/settings.html" class="menu-link px-5">Ganti No Ext</a>
+													<a href="#" class="menu-link px-5" data-bs-toggle="modal" data-bs-target="#gantiSipModal">Ganti No Ext</a>
 												</div>
 												<div class="menu-item px-5">
 													<a href="{{ url_for('logout') }}" class="menu-link px-5">Sign Out</a>
@@ -465,6 +465,36 @@
 			</div>
 			<!--end::Page-->
 		</div>
+		<div class="modal fade" id="gantiSipModal" tabindex="-1" aria-labelledby="gantiSipModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			  <form method="POST" action="{{ url_for('ganti_sip') }}">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<h5 class="modal-title" id="gantiSipModalLabel">Ganti Nomor SIP</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+				  </div>
+				  <div class="modal-body">
+					<div class="mb-3">
+					  <label for="num_sip" class="form-label">Nomor SIP</label>
+					  <input type="text" class="form-control" id="num_sip" name="num_sip" value="{{ current_user.num_sip or '' }}">
+					</div>
+					<div class="mb-3">
+					  <label for="pas_sip" class="form-label">Password SIP</label>
+					  <div class="input-group">
+						<input type="password" class="form-control" id="pas_sip" name="pas_sip" value="{{ current_user.pas_sip or '' }}">
+						<button class="btn btn-outline-secondary" type="button" id="togglePassword">
+						  <i class="bi bi-eye" id="toggleIcon"></i>
+						</button>
+					  </div>
+					</div>
+				  </div>
+				  <div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Simpan</button>
+				  </div>
+				</div>
+			  </form>
+			</div>
+		  </div>
 		<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
 			<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
 			<span class="svg-icon">
@@ -496,6 +526,16 @@
 		<script src="../static/assets/js/custom/modals/upgrade-plan.js"></script>
 		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->
+		<script>
+			document.getElementById('togglePassword').addEventListener('click', function () {
+			  const passwordInput = document.getElementById('pas_sip');
+			  const icon = document.getElementById('toggleIcon');
+			  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+			  passwordInput.setAttribute('type', type);
+			  icon.classList.toggle('bi-eye');
+			  icon.classList.toggle('bi-eye-slash');
+			});
+		  </script>
 	</body>
 	<!--end::Body-->
 </html>

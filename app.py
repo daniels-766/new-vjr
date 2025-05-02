@@ -56,6 +56,7 @@ class User(db.Model, UserMixin):
     pas_sip = db.Column(db.String(255))
 
     group_rel = db.relationship('UserGroup', backref=db.backref('users', lazy=True))
+    data = db.relationship('Data', backref='user', lazy=True, passive_deletes=True)
 
 class UserGroup(db.Model):  
     __tablename__ = 'user_group' 
@@ -81,11 +82,12 @@ class Data(db.Model):
     nama_ec2 = db.Column(db.String(255))
     phone_ec2 = db.Column(db.String(255))
     tanggal_upload = db.Column(db.DateTime, default=db.func.current_timestamp())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     remark = db.Column(db.String(255), default='not_ptp')
     catatan = db.Column(db.Text)
 
-    group_rel = db.relationship('User', backref=db.backref('data', lazy=True))  
+    #group_rel = db.relationship('User', backref=db.backref('data', lazy=True))  
 
 class UserActivity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -608,9 +610,15 @@ def my_case():
     query_params = request.args.to_dict()
     query_params.pop('page', None)
 
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
     return render_template(
         'my_case.html',
         username=current_user.username,
+        group=current_user.group,
+        group_name=group_name,
+        id_system=current_user.id_system,
         data_list=paginated_data,
         current_page=page,
         total_pages=total_pages,
@@ -694,10 +702,16 @@ def ptp():
     query_params = request.args.to_dict()
     query_params.pop('page', None)
 
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
     return render_template(
         'ptp.html',
         username=current_user.username,
         data_list=paginated_data,
+        group=current_user.group,
+        group_name=group_name,
+        id_system=current_user.id_system,
         current_page=page,
         total_pages=total_pages,
         query_params=query_params,

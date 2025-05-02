@@ -327,8 +327,8 @@
                                                             <i class="fas fa-eye me-1" style="margin-left: 5px; cursor: pointer;" onclick="togglePhoneNumber({{ loop.index }})"></i>
                                                         </td>                                                        
                                                         <td>{{ data.overdue }}</td>
-                                                        <td>{{ data.pokok_pinjaman_int }}</td>
-                                                        <td>{{ data.total_tagihan_int }}</td>
+                                                        <td>{{ "{:,}".format(data.pokok_pinjaman_int).replace(",", ".") }}</td>
+                                                        <td>{{ "{:,}".format(data.total_tagihan_int).replace(",", ".") }}</td>
                                                         <td>
 															<button class="btn btn-sm btn-light btn-active-success fw-bolder"
 																data-bs-toggle="modal" 
