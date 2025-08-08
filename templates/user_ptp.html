@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!--begin::Head-->
 	<head><base href="../">
-		<title>User My PTP</title>
+		<title>PTP</title>
 		<meta name="description" content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
 		<meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,10 +24,7 @@
 		<link href="../static/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 	</head>
-	<!--end::Head-->
-	<!--begin::Body-->
 	<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
-		<!--begin::Main-->
 		{% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <div class="alert-container position-fixed top-0 end-0 p-3" style="z-index: 500;">
@@ -43,20 +39,13 @@
                 </div>
             {% endif %}
         {% endwith %}
-		<!--begin::Root-->
 		<div class="d-flex flex-column flex-root">
-			<!--begin::Page-->
 			<div class="page d-flex flex-row flex-column-fluid">
-				<!--begin::Aside-->
 				<div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
-					<!--begin::Brand-->
 					<div class="aside-logo flex-column-auto" id="kt_aside_logo">
-						<!--begin::Logo-->
 						<a href="{{ url_for('dashboard') }}">
 							<img alt="Logo" src="../static/assets/logo/vjr2.png" class="h-25px logo" />
                         </a>
-						<!--end::Logo-->
-						<!--begin::Aside toggler-->
 						<div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize">
 							<!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg-->
 							<span class="svg-icon svg-icon-1 rotate-180">
@@ -67,10 +56,7 @@
 							</span>
 							<!--end::Svg Icon-->
 						</div>
-						<!--end::Aside toggler-->
 					</div>
-					<!--end::Brand-->
-					<!--begin::Aside menu-->
 					<div class="aside-menu flex-column-fluid">
 						<!--begin::Aside Menu-->
 						<div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
@@ -81,7 +67,7 @@
 										<span class="menu-section text-muted text-uppercase fs-8 ls-1">Dashboard</span>
 									</div>
 								</div>
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
 									<span class="menu-link active">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
@@ -93,10 +79,10 @@
 											</span>
 											<!--end::Svg Icon-->
 										</span>
-										<span class="menu-title">Praktik Penagihan</span>
+										<span class="menu-title">Case Active</span>
 										<span class="menu-arrow"></span>
 									</span>
-									<div class="menu-sub menu-sub-accordion">
+									<div class="menu-sub menu-sub-accordion menu-active-bg">
 										<a href="{{ url_for('my_data') }}" class="menu-item menu-accordion">
 											<span class="menu-link">
 												<span class="menu-bullet">
@@ -105,14 +91,46 @@
 												<span class="menu-title">My Case</span>
 											</span>
 										</a>										
-										<span class="menu-item menu-accordion">
+										<a href="{{ url_for('user_ptp') }}" class="menu-item menu-accordion">
 											<span class="menu-link active">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
 												<span class="menu-title">PTP</span>
 											</span>
-										</span>
+										</a>
+										<a href="{{ url_for('not_active') }}" class="menu-item menu-accordion">
+											<span class="menu-link">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Not Active</span>
+											</span>
+										</a>
+										<a href="{{ url_for('no_answer') }}" class="menu-item menu-accordion">
+											<span class="menu-link">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">No Answer</span>
+											</span>
+										</a>
+										<a href="{{ url_for('answer_no_ptp') }}" class="menu-item menu-accordion">
+											<span class="menu-link">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Answer but Not PTP</span>
+											</span>
+										</a>
+										<a href="{{ url_for('lunas') }}" class="menu-item menu-accordion">
+											<span class="menu-link">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Paid</span>
+											</span>
+										</a>
 									</div>
 								</div>
 							</div>
@@ -120,19 +138,10 @@
 						</div>
 						<!--end::Aside Menu-->
 					</div>
-					<!--end::Aside menu-->
-					<!--begin::Footer-->
-					
-					<!--end::Footer-->
 				</div>
-				<!--end::Aside-->
-				<!--begin::Wrapper-->
 				<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-					<!--begin::Header-->
 					<div id="kt_header" style="" class="header align-items-stretch">
-						<!--begin::Container-->
 						<div class="container-fluid d-flex align-items-stretch justify-content-between">
-							<!--begin::Aside mobile toggle-->
 							<div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
 								<div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_aside_mobile_toggle">
 									<!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
@@ -145,15 +154,11 @@
 									<!--end::Svg Icon-->
 								</div>
 							</div>
-							<!--end::Aside mobile toggle-->
-							<!--begin::Mobile logo-->
 							<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 								<a href="../dist/index.html" class="d-lg-none">
-									<img alt="Logo" src="../static/assets/media/logos/logo-2.svg" class="h-30px" />
+									<img alt="Logo" src="../static/assets/logo/vjr3.png" class="h-30px" />
 								</a>
 							</div>
-							<!--end::Mobile logo-->
-							<!--begin::Wrapper-->
 							<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
 								<!--begin::Navbar-->
 								<div class="d-flex align-items-stretch" id="kt_header_nav">
@@ -166,15 +171,35 @@
 													<span class="menu-title">Home</span>
 												</a>
 											</div>
-                                            <div class="menu-item me-lg-1">
+											<div class="menu-item me-lg-1">
 												<a class="menu-link py-3" href="{{ url_for('my_data') }}">
 													<span class="menu-title">My Case</span>
 												</a>
 											</div>
-											<div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item here show menu-lg-down-accordion me-lg-1">
-												<span class="menu-link py-3">
+                                            <div class="menu-item me-lg-1">
+												<a class="menu-link active py-3" href="{{ url_for('user_ptp') }}">
 													<span class="menu-title">PTP</span>
-												</span>
+												</a>
+											</div>
+											<div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('not_active') }}">
+													<span class="menu-title">Not Active</span>
+												</a>
+											</div>
+											<div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('no_answer') }}">
+													<span class="menu-title">No Answer</span>
+												</a>
+											</div>
+											<div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('answer_no_ptp') }}">
+													<span class="menu-title">Answer but Not PTP</span>
+												</a>
+											</div>
+											<div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('lunas') }}">
+													<span class="menu-title">Paid</span>
+												</a>
 											</div>
 										</div>
 										<!--end::Menu-->
@@ -228,15 +253,10 @@
 								</div>
 								<!--end::Topbar-->
 							</div>
-							<!--end::Wrapper-->
 						</div>
-						<!--end::Container-->
 					</div>
-					<!--end::Header-->
-					<!--begin::Content-->
 					<div class="content d-flex flex-column flex-column-fluid " id="kt_content">
                         <div id="kt_content_container" class="container-xxl" style="margin-top: -50px;">
-                            <!--begin::Navbar-->
                             <div class="card mb-6 mb-xl-9">
                                 <div class="card card-flush">
                                     <div class="card-header mt-5 d-flex justify-content-between align-items-start flex-wrap">
@@ -273,28 +293,87 @@
                                                     placeholder="Max" />
                                             </div>
                                             <button class="btn btn-sm btn-primary" type="submit">Cari</button>
+											
+											<div class="me-4">
+												<a href="#" class="btn btn-sm btn-flex btn-success btn-active-primary fw-bolder" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+												<span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black" />
+													</svg>
+												</span>Sort by</a>
+												<div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_61484bf44d957">
+													<div class="px-7 py-5">
+														<div class="fs-5 text-dark fw-bolder">Sort by Options</div>
+													</div>
+													<div class="separator border-gray-200"></div>
+													<div class="px-7 py-5">
+														<div class="mb-10">
+															<label class="form-label fw-bold">Customer Name:</label>
+															<div class="d-flex">
+																<label class="form-check form-check-sm form-check-custom form-check-solid me-5 form-check-inline">
+																	<input class="form-check-input" type="radio" name="customer_name" value="1"
+																	{% if request.args.get('customer_name') == '1' %}checked{% endif %}>
+																	<span class="form-check-label">A-Z</span>
+																</label>
+																<label class="form-check form-check-sm form-check-custom form-check-solid form-check-inline">
+																	<input class="form-check-input" type="radio" name="customer_name" value="2"
+																	{% if request.args.get('customer_name') == '2' %}checked{% endif %}>
+																	<span class="form-check-label">Z-A</span>
+																</label>
+															</div>
+														</div>
+														<div class="mb-10">
+															<label class="form-label fw-bold">Outstanding:</label>
+															<div class="d-flex">
+																<label class="form-check form-check-sm form-check-custom form-check-solid me-5 form-check-inline">
+																	<input class="form-check-input" type="radio" name="outstanding" value="1"
+																	{% if request.args.get('outstanding') == '1' %}checked{% endif %}>
+																	<span class="form-check-label">High-Low</span>
+																</label>
+																<label class="form-check form-check-sm form-check-custom form-check-solid form-check-inline">
+																	<input class="form-check-input" type="radio" name="outstanding" value="2"
+																	{% if request.args.get('outstanding') == '2' %}checked{% endif %}>
+																	<span class="form-check-label">Low-High</span>
+																</label>
+															</div>
+														</div>
+														<div class="mb-10">
+															<label class="form-label fw-bold">Principal Amount:</label>
+															<div class="d-flex">
+																<label class="form-check form-check-sm form-check-custom form-check-solid me-5 form-check-inline">
+																	<input class="form-check-input" type="radio" name="principal" value="1"
+																	{% if request.args.get('principal') == '1' %}checked{% endif %}>
+																	<span class="form-check-label">High-Low</span>
+																</label>
+																<label class="form-check form-check-sm form-check-custom form-check-solid form-check-inline">
+																	<input class="form-check-input" type="radio" name="principal" value="2"
+																	{% if request.args.get('principal') == '2' %}checked{% endif %}>
+																	<span class="form-check-label">Low-High</span>
+																</label>
+															</div>
+														</div>
+														<div class="d-flex justify-content-end">
+															<a href="{{ url_for('user_ptp') }}" class="btn btn-sm btn-light btn-active-light-primary me-2">Reset</a>
+															<button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
+														</div>
+													</div>
+												</div>
+											</div>
                                         </form>
-                                        <div class="ms-auto">
-                                            <a href="#" class="btn btn-sm btn-success fs-4" data-bs-toggle="modal"
-                                                id="kt_toolbar_primary_button">
-                                                <i class="fas fa-phone-alt me-1"></i> Auto Call
-                                            </a>
-                                        </div>
                                     </div>
                     
                                     <div class="card-body pt-0">
                                         <div class="table-responsive">
-                                            <table id="kt_profile_overview_table"
-                                                class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bolder">
+                                            <table id="kt_profile_overview_table" class="table table-bordered table-striped align-middle fw-bolder">
                                                 <thead class="fs-7 text-gray-400 text-uppercase">
                                                     <tr>
-                                                        <th class="min-w-100px">Order Number</th>
-                                                        <th class="min-w-150px">Cust Name</th>
-                                                        <th class="min-w-100px">Phone Number</th>
-                                                        <th class="min-w-50px">OVD</th>
-                                                        <th class="min-w-100px">Principal Amount</th>
-                                                        <th class="min-w-100px">Outstanding Amount</th>
-                                                        <th class="min-w-50px">Operation</th>
+                                                        <th class="min-w-100px" data-orderable="false">Order Number</th>
+                                                        <th class="min-w-150px text-center" data-orderable="false">Cust Name</th>
+                                                        <th class="min-w-100px text-center" data-orderable="false">Phone Number</th>
+                                                        <th class="min-w-50px text-center" data-orderable="false">OVD</th>
+                                                        <th class="min-w-100px text-center" data-orderable="false">Principal Amount</th>
+                                                        <th class="min-w-100px text-center" data-orderable="false">Outstanding</th>
+                                                        <th class="min-w-50px text-center" data-orderable="false">Operation</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="fs-6">
@@ -309,28 +388,32 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>
-                                                            <a href="{{ url_for('user_detail_data', id=data.id) }}" style="text-decoration: none; color: inherit;">
+                                                        <td class="text-center">
+                                                            <a href="{{ url_for('user_detail_data', id=data.id) }}" style="text-decoration: none;">
 																{{ data.nama_nasabah }}
-															</a>															
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#callModal"
-																onclick="openCallModal('{{ data.id }}', '{{ data.nama_nasabah }}', '{{ data.total_tagihan }}', '{{ data.phone }}', '{{ data.remark }}')">
-																<i class="fas fa-phone me-1" style="margin-left: 5px; color: black; cursor: pointer;"></i>
-															</a>
+															</a>														
+                                                            <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#callModal"
+																onclick="openCallModal('{{ data.id }}', '{{ data.nama_nasabah }}', '{{ data.total_tagihan }}', '{{ data.phone }}' , '{{ data.remark }}')">
+																<i class="fas fa-phone me-1" style="color: rgb(0, 140, 255); cursor: pointer;"></i>
+															</a>										 -->
                                                         </td>
-                                                        <td>
-                                                            <span class="phone-number" id="phone-{{ loop.index }}" 
-                                                                  data-full-number="0{{ data.phone }}" 
-                                                                  data-hidden-number="0{{ data.phone[:3] }}****{{ data.phone[-3:] }}">
-                                                                0{{ data.phone[:3] }}****{{ data.phone[-3:] }}
-                                                            </span>
-                                                            <i class="fas fa-eye me-1" style="margin-left: 5px; cursor: pointer;" onclick="togglePhoneNumber({{ loop.index }})"></i>
-                                                        </td>                                                        
-                                                        <td>{{ data.overdue }}</td>
-                                                        <td>{{ "{:,}".format(data.pokok_pinjaman_int).replace(",", ".") }}</td>
-                                                        <td>{{ "{:,}".format(data.total_tagihan_int).replace(",", ".") }}</td>
-                                                        <td>
-															<button class="btn btn-sm btn-light btn-active-success fw-bolder"
+                                                        <td class="text-center">
+															{% if data.phone %}
+																<span class="phone-number" id="phone-{{ loop.index }}" 
+																	  data-full-number="0{{ data.phone }}" 
+																	  data-hidden-number="0{{ data.phone[:3] }}****{{ data.phone[-4:] }}">
+																	0{{ data.phone[:3] }}****{{ data.phone[-4:] }}
+																</span>
+															{% else %}
+																<span class="text-muted">No Phone</span>
+															{% endif %}
+															<i class="fas fa-eye me-1" style="margin-left: 5px; cursor: pointer;" onclick="togglePhoneNumber({{ loop.index }})"></i>
+														</td>																											   
+                                                        <td class="text-center">{{ data.overdue }}</td>
+                                                        <td class="text-center">{{ "{:,}".format(data.pokok_pinjaman_int).replace(",", ".") }}</td>
+                                                        <td class="text-center">{{ "{:,}".format(data.total_tagihan_int).replace(",", ".") }}</td>
+                                                        <td class="text-center">
+															<button class="btn btn-sm btn-light btn-active-success fw-bolder me-2"
 																data-bs-toggle="modal" 
 																data-bs-target="#whatsappModal"
 																data-phone="{{ data.phone }}"
@@ -343,10 +426,30 @@
 																	<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
 																		<path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 29.079097 3.1186875 32.88588 4.984375 36.208984 L 2.0371094 46.730469 A 1.0001 1.0001 0 0 0 3.2402344 47.970703 L 14.210938 45.251953 C 17.434629 46.972929 21.092591 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 21.278025 46 17.792121 45.029635 14.761719 43.333984 A 1.0001 1.0001 0 0 0 14.033203 43.236328 L 4.4257812 45.617188 L 7.0019531 36.425781 A 1.0001 1.0001 0 0 0 6.9023438 35.646484 C 5.0606869 32.523592 4 28.890107 4 25 C 4 13.390466 13.390466 4 25 4 z M 16.642578 13 C 16.001539 13 15.086045 13.23849 14.333984 14.048828 C 13.882268 14.535548 12 16.369511 12 19.59375 C 12 22.955271 14.331391 25.855848 14.613281 26.228516 L 14.615234 26.228516 L 14.615234 26.230469 C 14.588494 26.195329 14.973031 26.752191 15.486328 27.419922 C 15.999626 28.087653 16.717405 28.96464 17.619141 29.914062 C 19.422612 31.812909 21.958282 34.007419 25.105469 35.349609 C 26.554789 35.966779 27.698179 36.339417 28.564453 36.611328 C 30.169845 37.115426 31.632073 37.038799 32.730469 36.876953 C 33.55263 36.755876 34.456878 36.361114 35.351562 35.794922 C 36.246248 35.22873 37.12309 34.524722 37.509766 33.455078 C 37.786772 32.688244 37.927591 31.979598 37.978516 31.396484 C 38.003976 31.104927 38.007211 30.847602 37.988281 30.609375 C 37.969311 30.371148 37.989581 30.188664 37.767578 29.824219 C 37.302009 29.059804 36.774753 29.039853 36.224609 28.767578 C 35.918939 28.616297 35.048661 28.191329 34.175781 27.775391 C 33.303883 27.35992 32.54892 26.991953 32.083984 26.826172 C 31.790239 26.720488 31.431556 26.568352 30.914062 26.626953 C 30.396569 26.685553 29.88546 27.058933 29.587891 27.5 C 29.305837 27.918069 28.170387 29.258349 27.824219 29.652344 C 27.819619 29.649544 27.849659 29.663383 27.712891 29.595703 C 27.284761 29.383815 26.761157 29.203652 25.986328 28.794922 C 25.2115 28.386192 24.242255 27.782635 23.181641 26.847656 L 23.181641 26.845703 C 21.603029 25.455949 20.497272 23.711106 20.148438 23.125 C 20.171937 23.09704 20.145643 23.130901 20.195312 23.082031 L 20.197266 23.080078 C 20.553781 22.728924 20.869739 22.309521 21.136719 22.001953 C 21.515257 21.565866 21.68231 21.181437 21.863281 20.822266 C 22.223954 20.10644 22.02313 19.318742 21.814453 18.904297 L 21.814453 18.902344 C 21.828863 18.931014 21.701572 18.650157 21.564453 18.326172 C 21.426943 18.001263 21.251663 17.580039 21.064453 17.130859 C 20.690033 16.232501 20.272027 15.224912 20.023438 14.634766 L 20.023438 14.632812 C 19.730591 13.937684 19.334395 13.436908 18.816406 13.195312 C 18.298417 12.953717 17.840778 13.022402 17.822266 13.021484 L 17.820312 13.021484 C 17.450668 13.004432 17.045038 13 16.642578 13 z M 16.642578 15 C 17.028118 15 17.408214 15.004701 17.726562 15.019531 C 18.054056 15.035851 18.033687 15.037192 17.970703 15.007812 C 17.906713 14.977972 17.993533 14.968282 18.179688 15.410156 C 18.423098 15.98801 18.84317 16.999249 19.21875 17.900391 C 19.40654 18.350961 19.582292 18.773816 19.722656 19.105469 C 19.863021 19.437122 19.939077 19.622295 20.027344 19.798828 L 20.027344 19.800781 L 20.029297 19.802734 C 20.115837 19.973483 20.108185 19.864164 20.078125 19.923828 C 19.867096 20.342656 19.838461 20.445493 19.625 20.691406 C 19.29998 21.065838 18.968453 21.483404 18.792969 21.65625 C 18.639439 21.80707 18.36242 22.042032 18.189453 22.501953 C 18.016221 22.962578 18.097073 23.59457 18.375 24.066406 C 18.745032 24.6946 19.964406 26.679307 21.859375 28.347656 C 23.05276 29.399678 24.164563 30.095933 25.052734 30.564453 C 25.940906 31.032973 26.664301 31.306607 26.826172 31.386719 C 27.210549 31.576953 27.630655 31.72467 28.119141 31.666016 C 28.607627 31.607366 29.02878 31.310979 29.296875 31.007812 L 29.298828 31.005859 C 29.655629 30.601347 30.715848 29.390728 31.224609 28.644531 C 31.246169 28.652131 31.239109 28.646231 31.408203 28.707031 L 31.408203 28.708984 L 31.410156 28.708984 C 31.487356 28.736474 32.454286 29.169267 33.316406 29.580078 C 34.178526 29.990889 35.053561 30.417875 35.337891 30.558594 C 35.748225 30.761674 35.942113 30.893881 35.992188 30.894531 C 35.995572 30.982516 35.998992 31.07786 35.986328 31.222656 C 35.951258 31.624292 35.8439 32.180225 35.628906 32.775391 C 35.523582 33.066746 34.975018 33.667661 34.283203 34.105469 C 33.591388 34.543277 32.749338 34.852514 32.4375 34.898438 C 31.499896 35.036591 30.386672 35.087027 29.164062 34.703125 C 28.316336 34.437036 27.259305 34.092596 25.890625 33.509766 C 23.114812 32.325956 20.755591 30.311513 19.070312 28.537109 C 18.227674 27.649908 17.552562 26.824019 17.072266 26.199219 C 16.592866 25.575584 16.383528 25.251054 16.208984 25.021484 L 16.207031 25.019531 C 15.897202 24.609805 14 21.970851 14 19.59375 C 14 17.077989 15.168497 16.091436 15.800781 15.410156 C 16.132721 15.052495 16.495617 15 16.642578 15 z"></path>
 																	</svg>
-																  </span>
-																Whatsapp
+																</span>
+																WhatsApp
 															</button>
-														</td>																										
+
+															<button class="btn btn-sm btn-light btn-active-primary fw-bolder"
+																data-bs-toggle="modal" 
+																data-bs-target="#callModal"
+																data-phone="{{ data.phone }}"
+																data-overdue="{{ data.overdue }}"
+																data-tagihan="{{ data.total_tagihan }}"
+																data-nama="{{ username }}"
+																data-id="{{ id_system }}"
+																data-group="{{ group_name }}"
+																onclick="openCallModal('{{ data.id }}', '{{ data.nama_nasabah }}', '{{ data.total_tagihan }}', '{{ data.phone }}' , '{{ data.remark }}')">
+																<span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
+																	<svg id='Incoming_Call_24' width='100' height='100' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+																	<g transform="matrix(1.43 0 0 1.43 12 12)" >
+																	<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0, 0, 0); fill-rule: nonzero; opacity: 1;" transform=" translate(-7, -8)" d="M 0 1 L 0 5 C 0 10.523 4.477 15 10 15 L 14 15 L 14 9 L 10 9 L 7.4960938 11.503906 L 3.4960938 7.5039062 L 6 5 L 6 1 L 0 1 z M 10 2 L 8 4 L 10 6 L 11 6 L 11 5 L 14 5 L 14 3 L 11 3 L 11 2 L 10 2 z" stroke-linecap="round" />
+																	</g>
+																	</svg>
+																</span>
+																Call
+															</button>
+														</td>														
                                                     </tr>
                                                     {% endfor %}
                                                 </tbody>
@@ -371,7 +474,7 @@
                                             
                                                     {% if current_page < total_pages %}
                                                     <li class="page-item">
-                                                        <a class="page-link" href="{{ url_for('my_data') }}?page={{ current_page + 1 }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
+                                                        <a class="page-link" href="{{ url_for('user_ptp') }}?page={{ current_page + 1 }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
                                                             &raquo;
                                                         </a>
                                                     </li>
@@ -386,6 +489,7 @@
                         </div>
                     </div>
 
+					<!-- Modal -->
 					<div class="modal fade" id="gantiSipModal" tabindex="-1" aria-labelledby="gantiSipModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 						  <form method="POST" action="{{ url_for('ganti_sip') }}">
@@ -420,60 +524,79 @@
 					  <div class="modal fade" id="callModal" tabindex="-1" aria-labelledby="callModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 						<div class="modal-dialog modal-dialog-centered">
 						  <div class="modal-content">
-							<form id="callForm" method="POST" action="{{ url_for('submit_call_ptp') }}">
+							<form id="callForm" method="POST" action="{{ url_for('submit_call') }}">
 							  <input type="hidden" name="data_id" id="modalDataId">
 							  <div class="modal-header">
 								<h5 class="modal-title" id="callModalLabel">Detail Panggilan</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
 							  </div>
-							  <div class="modal-body">
-								<div class="mb-3">
-								  <label class="form-label"><strong>Nama :</strong></label>
-								  <div id="modalNamaNasabah">-</div>
+							  <div class="modal-body bg-light rounded-3 px-4 py-3">
+								<div class="mb-4 p-3 border rounded shadow-sm bg-white">
+									<div class="mb-2">
+									<label class="form-label fw-semibold text-secondary">
+										<i class="bi bi-person-fill me-1 text-dark"></i> Nama :
+									</label>
+									<div id="modalNamaNasabah" class="ps-4 text-dark fw-bold">-</div>
+									</div>
+									<div class="mb-2">
+									<label class="form-label fw-semibold text-secondary">
+										<i class="bi bi-telephone-fill me-1 text-dark"></i> Nomor Telepon :
+									</label>
+									<div id="modalNomorTelepon" class="ps-4 text-dark fw-bold">-</div>
+									</div>
+									<div>
+									<label class="form-label fw-semibold text-secondary">
+										<i class="bi bi-cash-stack me-1 text-dark"></i> Total Tagihan :
+									</label>
+									<div id="modalTotalTagihan" class="ps-4 text-danger fw-bold fs-5">-</div>
+									</div>
 								</div>
-								<div class="mb-3">
-									<label class="form-label"><strong>Nomor Telepon :</strong></label>
-									<div id="modalNomorTelepon">-</div>
+
+								<div class="mb-4">
+									<label for="remark" class="form-label fw-bold text-primary">
+									<i class="bi bi-chat-left-text-fill me-1"></i> Remark :
+									</label>
+									<select id="remark" name="remark" class="form-select shadow-sm rounded-pill px-4 py-2" style="transition: all 0.3s ease;">
+									<option value="" disabled selected>-- Pilih Remark --</option>
+									<option value="1">📵 Not PTP</option>
+									<option value="2">📞 PTP</option>
+									<option value="3">🔕 Not Active</option>
+									<option value="4">☎️ No Answer</option>
+									<option value="5">📴 Answer but Not PTP</option>
+									<option value="6">✅ Sudah Bayar</option>
+									</select>
 								</div>
+
 								<div class="mb-3">
-								  <label class="form-label"><strong>Total Tagihan :</strong></label>
-								  <div id="modalTotalTagihan">-</div>
+									<label for="note" class="form-label fw-bold text-primary">
+									<i class="bi bi-journal-text me-1"></i> Notes :
+									</label>
+									<textarea class="form-control shadow-sm rounded-3" id="note" name="note" rows="3" placeholder="Tambahkan catatan di sini..." style="transition: all 0.3s ease;"></textarea>
 								</div>
-								<div class="mb-3">
-								  <label for="remark" class="form-label"><strong>Remark :</strong></label>
-								  <select id="remark" name="remark" class="form-select">
-									<option value="not_ptp">Not PTP</option>
-									<option value="ptp">PTP</option>
-								  </select>
 								</div>
-								<div class="mb-3">
-									<label for="note" class="form-label"><strong>Notes :</strong></label>
-									<textarea class="form-control" id="note" name="note" rows="3" placeholder="Tambahkan catatan di sini..."></textarea>
-								</div>								
-							  </div>
-							  <div class="modal-footer">
-								<button type="button" class="btn btn-primary" onclick="callWithMicroSIP()">Panggil</button>
-								<button type="submit" class="btn btn-success">Submit</button>
+							  <div class="modal-footer d-flex justify-content-between px-4 py-3 bg-white border-top rounded-bottom">
+								<button type="button" class="btn btn-outline-primary d-flex align-items-center px-4 py-2 shadow-sm" onclick="callWithMicroSIP()" style="transition: all 0.3s ease;">
+									<i class="bi bi-telephone-outbound-fill me-2"></i> Panggil Nasabah
+								</button>
+
+								<button type="submit" class="btn btn-success d-flex align-items-center px-4 py-2 shadow-sm" style="transition: all 0.3s ease;">
+									<i class="bi bi-send-check-fill me-2"></i> Submit Data
+								</button>
 							  </div>
 							</form>
 						  </div>
 						</div>
-					  </div>                    
-					<!--end::Content-->
-					<!--begin::Footer-->
+					  </div>
 					<div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
 						<div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
 							<div class="text-dark order-2 order-md-1">
 								<span class="text-muted fw-bold me-1">2025©</span>
-								<a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">PT. Vista Jaya Raya</a>
+								<span target="_blank" class="text-gray-800 text-hover-primary">PT. Vista Jaya Raya</span>
 							</div>
 						</div>
 					</div>
-					<!--end::Footer-->
 				</div>
-				<!--end::Wrapper-->
 			</div>
-			<!--end::Page-->
 		</div>
         <div class="modal fade" id="whatsappModal" tabindex="-1" aria-labelledby="whatsappModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 			<div class="modal-dialog modal-dialog-centered">
@@ -484,7 +607,9 @@
 					</div>
 					<div class="modal-body">
 						<textarea id="whatsappMessage" class="form-control" rows="17"></textarea>
-						</div>
+
+							
+					</div>
 					<div class="modal-footer">
 						<button class="btn btn-success" onclick="sendWhatsapp()">Kirim via WhatsApp</button>
 					</div>
@@ -493,27 +618,17 @@
 		</div>
 				  
 		<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
-			<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
 			<span class="svg-icon">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 					<rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black" />
 					<path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="black" />
 				</svg>
 			</span>
-			<!--end::Svg Icon-->
 		</div>
-		<!--end::Scrolltop-->
-		<!--end::Main-->
 		<script>var hostUrl = "../static/assets/";</script>
-		<!--begin::Javascript-->
-		<!--begin::Global Javascript Bundle(used by all pages)-->
 		<script src="../static/assets/plugins/global/plugins.bundle.js"></script>
 		<script src="../static/assets/js/scripts.bundle.js"></script>
-		<!--end::Global Javascript Bundle-->
-		<!--begin::Page Vendors Javascript(used by this page)-->
 		<script src="../static/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-		<!--end::Page Vendors Javascript-->
-		<!--begin::Page Custom Javascript(used by this page)-->
 		<script src="../static/assets/js/custom/pages/projects/project/project.js"></script>
 		<script src="../static/assets/js/custom/modals/users-search.js"></script>
 		<script src="../static/assets/js/custom/modals/new-target.js"></script>
@@ -521,8 +636,6 @@
 		<script src="../static/assets/js/custom/apps/chat/chat.js"></script>
 		<script src="../static/assets/js/custom/modals/create-app.js"></script>
 		<script src="../static/assets/js/custom/modals/upgrade-plan.js"></script>
-		<!--end::Page Custom Javascript-->
-		<!--end::Javascript-->
 		<script>
             setTimeout(function() {
                 const alert = document.getElementById("flash-alert");
@@ -552,18 +665,18 @@
 				const id = button.data('id');
 				const group = button.data('group');
 			
-				tagihan = formatRupiah(tagihan);
+				tagihan = formatRupiah(tagihan);  
 			
 				const pesan = `Selamat Pagi Bapak/Ibu,
-				
+							
 Perkenalkan nama saya ${nama} dari aplikasi ${group} dengan kode ID Staff : ${id}.
-	
-Saya ingin mengingatkan bahwa tagihan Bapak/Ibu sudah keterlambatan *${overdue} hari*. Dengan total tagihan *Rp ${tagihan}*.
-
+		
+Saya ingin mengingatkan bahwa tagihan Bapak/Ibu sudah keterlambatan *${overdue} hari*. Dengan total tagihan *Rp. ${tagihan}*.
+		
 *Untuk kode Virtual Account bisa di cek di aplikasi untuk menghindari penipuan.*
-
+		
 Mohon konfirmasi dengan cara membalas pesan ini. Pembayaran dapat dilakukan a/n diri sendiri dengan nominal yang sesuai.
-
+		
 Terima kasih.`;
 			
 				document.getElementById("whatsappMessage").value = pesan;
@@ -592,8 +705,7 @@ Terima kasih.`;
 				return rupiah;
 			}
 			</script>
-			
-			  
+			 
           <script>
             function togglePhoneNumber(index) {
             var phoneElement = document.getElementById("phone-" + index);
@@ -608,36 +720,41 @@ Terima kasih.`;
         }
 
         </script>
-
-<script>
-    document.getElementById('togglePassword').addEventListener('click', function () {
-      const passwordInput = document.getElementById('pas_sip');
-      const icon = document.getElementById('toggleIcon');
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordInput.setAttribute('type', type);
-      icon.classList.toggle('bi-eye');
-      icon.classList.toggle('bi-eye-slash');
-    });
-  </script>
-  <script>
-	function openCallModal(id, nama, tagihan, phone, remark) {
-		document.getElementById('modalDataId').value = id;
-		document.getElementById('modalNamaNasabah').innerText = nama;
-		document.getElementById('modalNomorTelepon').innerText = phone;
-		document.getElementById('modalTotalTagihan').innerText = tagihan;
-		document.getElementById('remark').value = remark;
-		document.getElementById('note').value = ''; 
-	}
-	</script>
-	<script>
-		document.getElementById('callForm').addEventListener('submit', function (e) {
-			const noteField = document.getElementById('note');
-			if (!noteField.value.trim()) {
-				noteField.removeAttribute('name');
-			}
-		});
-		</script>
 		<script>
+			const callModal = document.getElementById('callModal');
+			callModal.addEventListener('show.bs.modal', function (event) {
+			  const button = event.relatedTarget;
+			  const nama = button.getAttribute('data-nama');
+			  const tagihan = button.getAttribute('data-tagihan');
+			  const remark = button.getAttribute('data-remark');
+              
+			  const id = button.getAttribute('data-id');
+		  
+			  callModal.querySelector('.modal-body div[data-field="nama"]').textContent = nama;
+			  callModal.querySelector('.modal-body div[data-field="tagihan"]').textContent = 'Rp ' + tagihan;
+			  callModal.querySelector('#remark').value = remark;
+			  callModal.querySelector('#submitModal').setAttribute('data-id', id); 
+			});
+		  </script>
+		  <script>
+			function openCallModal(id, nama, tagihan, phone, remark) {
+				document.getElementById('modalDataId').value = id;
+				document.getElementById('modalNamaNasabah').innerText = nama;
+				document.getElementById('modalNomorTelepon').innerText = phone;
+				document.getElementById('modalTotalTagihan').innerText = tagihan;
+				document.getElementById('remark').value = remark;
+				document.getElementById('note').value = '';
+			}
+			</script>
+			<script>
+				document.getElementById('callForm').addEventListener('submit', function (e) {
+					const noteField = document.getElementById('note');
+					if (!noteField.value.trim()) {
+						noteField.removeAttribute('name');
+					}
+				});
+				</script>
+		  <script>
 			function callWithMicroSIP() {
 				let nomor = document.getElementById("modalNomorTelepon").innerText.trim();
 			
@@ -647,5 +764,39 @@ Terima kasih.`;
 				window.location.href = sipURL;
 			}
 		</script>
+		<script>
+			document.getElementById('togglePassword').addEventListener('click', function () {
+			  const passwordInput = document.getElementById('pas_sip');
+			  const icon = document.getElementById('toggleIcon');
+			  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+			  passwordInput.setAttribute('type', type);
+			  icon.classList.toggle('bi-eye');
+			  icon.classList.toggle('bi-eye-slash');
+			});
+		  </script>
+		  <script>
+    function applySort() {
+        // Customer Name
+        const customerRadio = document.querySelector('input[name="filter_customer_name"]:checked');
+        if (customerRadio) {
+            document.getElementById('customer_name').value = customerRadio.value;
+        }
+
+        // Principal
+        const principalRadio = document.querySelector('input[name="filter_principal"]:checked');
+        if (principalRadio) {
+            document.getElementById('principal').value = principalRadio.value;
+        }
+
+        // Outstanding
+        const outstandingRadio = document.querySelector('input[name="filter_outstanding"]:checked');
+        if (outstandingRadio) {
+            document.getElementById('outstanding').value = outstandingRadio.value;
+        }
+
+        // Submit form
+        document.getElementById('filterForm').submit();
+    }
+</script>
 	</body>
 </html>

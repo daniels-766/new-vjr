@@ -79,7 +79,7 @@
 											</span>
 											<!--end::Svg Icon-->
 										</span>
-										<span class="menu-title">Akun Management</span>
+										<span class="menu-title">Account Management</span>
 									</a>
 								</div>
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -128,7 +128,7 @@
 											</span>
 											<!--end::Svg Icon-->
 										</span>
-										<span class="menu-title">Praktik Penagihan</span>
+										<span class="menu-title">Case Active</span>
 										<span class="menu-arrow"></span>
 									</span>
 									<div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -184,7 +184,7 @@
 							<!--begin::Mobile logo-->
 							<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 								<a href="../dist/index.html" class="d-lg-none">
-									<img alt="Logo" src="../static/assets/media/logos/logo-2.svg" class="h-30px" />
+									<img alt="Logo" src="../static/assets/logo/vjr3.png" class="h-30px" />
 								</a>
 							</div>
 							<!--end::Mobile logo-->
@@ -285,18 +285,49 @@
 										<div class="card-title m-0">
 											<h3 class="fw-bolder m-0">Personal Info</h3>
 										</div>
-										<!--begin::Card title-->
-										<!--begin::Card toolbar-->
-										<div class="card-toolbar my-1">
-											<!--begin::Select-->
-											<div class="me-6 my-1">
-												<a href="#" class="btn btn-sm btn-success fs-4" data-bs-toggle="modal" id="kt_toolbar_primary_button">
-													<i class="fas fa-phone-alt me-1"></i> Auto Call
-												  </a>	
+									</div>
+									<div class="modal fade" id="callModal" tabindex="-1" aria-labelledby="callModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content">
+												<form method="POST" action="{{ url_for('admin_submit_call') }}">
+													<input type="hidden" name="data_id" id="modalDataId">
+													<div class="modal-header">
+													<h5 class="modal-title" id="callModalLabel">Detail Panggilan</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+													</div>
+													<div class="modal-body">
+													<div class="mb-3">
+														<label class="form-label"><strong>Nama :</strong></label>
+														<div id="modalNamaNasabah">-</div>
+													</div>
+													<div class="mb-3">
+														<label class="form-label"><strong>Nomor Telepon :</strong></label>
+														<div id="modalNomorTelepon">-</div>
+													</div>
+													<div class="mb-3">
+														<label class="form-label"><strong>Total Tagihan :</strong></label>
+														<div id="modalTotalTagihan">-</div>
+													</div>
+													<div class="mb-3">
+														<label for="remark" class="form-label"><strong>Remark :</strong></label>
+														<select id="remark" name="remark" class="form-select">
+														<option value="not_ptp">Not PTP</option>
+														<option value="ptp">PTP</option>
+														</select>
+													</div>
+													<div class="mb-3">
+														<label for="note" class="form-label"><strong>Notes :</strong></label>
+														<textarea class="form-control" id="note" name="note" rows="3" placeholder="Tambahkan catatan di sini..."></textarea>
+													</div>
+													</div>
+													<div class="modal-footer">
+													<button type="button" class="btn btn-primary" onclick="callWithMicroSIP()">Panggil</button>
+													<button type="submit" class="btn btn-success">Submit</button>
+													</div>
+												</form>
 											</div>
 										</div>
-										<!--begin::Card toolbar-->
-									</div>
+									</div> 
                                     <div class="card-body p-9">
                                         <div class="row">
                                             <!-- Kolom Kiri -->
@@ -536,6 +567,48 @@
 			  icon.classList.toggle('bi-eye-slash');
 			});
 		  </script>
+		  <script>
+  document.getElementById('submitModal').addEventListener('click', function () {
+    const modalEl = document.getElementById('callModal');
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);  // BUKAN getInstance
+    modal.hide();
+  });
+</script>
+<script>
+			const callModal = document.getElementById('callModal');
+			callModal.addEventListener('show.bs.modal', function (event) {
+			  const button = event.relatedTarget;
+			  const nama = button.getAttribute('data-nama');
+			  const tagihan = button.getAttribute('data-tagihan');
+			  const remark = button.getAttribute('data-remark');
+			  const id = button.getAttribute('data-id');
+		  
+			  callModal.querySelector('.modal-body div[data-field="nama"]').textContent = nama;
+			  callModal.querySelector('.modal-body div[data-field="tagihan"]').textContent = 'Rp ' + tagihan;
+			  callModal.querySelector('#remark').value = remark;
+			  callModal.querySelector('#submitModal').setAttribute('data-id', id); 
+			});
+		  </script>
+		  <script>
+			function openCallModal(id, nama, tagihan, phone, remark) {
+				document.getElementById('modalDataId').value = id;
+				document.getElementById('modalNamaNasabah').innerText = nama;
+				document.getElementById('modalNomorTelepon').innerText = phone;
+				document.getElementById('modalTotalTagihan').innerText = 'Rp ' + tagihan;
+				document.getElementById('remark').value = remark;
+				document.getElementById('note').value = ''; 
+			}
+			</script>
+			<script>
+				function callWithMicroSIP() {
+					let nomor = document.getElementById("modalNomorTelepon").innerText.trim();
+				
+					const domain = "ld.infin8link.com:7060";
+					const sipURL = `sip:${nomor}@${domain}`;
+					
+					window.location.href = sipURL;
+				}
+			</script>
 	</body>
 	<!--end::Body-->
 </html>

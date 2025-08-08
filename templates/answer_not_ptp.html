@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head><base href="../">
-		<title>PTP</title>
+		<title>Answer but Not PTP</title>
 		<meta name="description" content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
 		<meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -126,7 +126,7 @@
 											</span>
 										</a>										
 										<a href="{{ url_for('ptp') }}" class="menu-item menu-accordion">
-											<span class="menu-link active">
+											<span class="menu-link">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -150,7 +150,7 @@
 											</span>
 										</a>
 										<a href="{{ url_for('answer_not_ptp_admin') }}" class="menu-item menu-accordion">
-											<span class="menu-link">
+											<span class="menu-link active">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -199,7 +199,7 @@
 												</a>
 											</div>
 											<div class="menu-item me-lg-1">
-												<a class="menu-link active py-3" href="{{ url_for('my_case') }}">
+												<a class="menu-link py-3" href="{{ url_for('my_case') }}">
 													<span class="menu-title">PTP</span>
 												</a>
 											</div>
@@ -214,7 +214,7 @@
 												</a>
 											</div>
 											<div class="menu-item me-lg-1">
-												<a class="menu-link py-3" href="{{ url_for('answer_not_ptp_admin') }}">
+												<a class="menu-link active py-3" href="{{ url_for('answer_not_ptp_admin') }}">
 													<span class="menu-title">Answer but Not PTP</span>
 												</a>
 											</div>
@@ -477,7 +477,7 @@
 												<ul class="pagination justify-content-start">
 													{% if current_page > 1 %}
 													<li class="page-item">
-														<a class="page-link" href="{{ url_for('ptp') }}?page={{ current_page - 1 }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
+														<a class="page-link" href="{{ url_for('answer_not_ptp_admin') }}?page={{ current_page - 1 }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
 															&laquo;
 														</a>
 													</li>
@@ -485,7 +485,7 @@
 											
 													{% for i in range(1, total_pages + 1) %}
 													<li class="page-item {% if i == current_page %}active{% endif %}">
-														<a class="page-link" href="{{ url_for('ptp') }}?page={{ i }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
+														<a class="page-link" href="{{ url_for('answer_not_ptp_admin') }}?page={{ i }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
 															{{ i }}
 														</a>
 													</li>
@@ -493,7 +493,7 @@
 											
 													{% if current_page < total_pages %}
 													<li class="page-item">
-														<a class="page-link" href="{{ url_for('ptp') }}?page={{ current_page + 1 }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
+														<a class="page-link" href="{{ url_for('answer_not_ptp_admin') }}?page={{ current_page + 1 }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
 															&raquo;
 														</a>
 													</li>

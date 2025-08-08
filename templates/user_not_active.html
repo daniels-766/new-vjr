@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head><base href="../">
-		<title>PTP</title>
+		<title>User Tidak Aktif</title>
 		<meta name="description" content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
 		<meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,10 +13,16 @@
 		<meta property="og:site_name" content="Keenthemes | Metronic" />
 		<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
 		<link rel="shortcut icon" href="../static/assets/logo/vjr3.png" />
+		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Page Vendor Stylesheets(used by this page)-->
 		<link href="../static/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Page Vendor Stylesheets-->
+		<!--begin::Global Stylesheets Bundle(used by all pages)-->
 		<link href="../static/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="../static/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
 		{% with messages = get_flashed_messages(with_categories=true) %}
@@ -41,65 +47,24 @@
 							<img alt="Logo" src="../static/assets/logo/vjr2.png" class="h-25px logo" />
                         </a>
 						<div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize">
+							<!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg-->
 							<span class="svg-icon svg-icon-1 rotate-180">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 									<path opacity="0.5" d="M14.2657 11.4343L18.45 7.25C18.8642 6.83579 18.8642 6.16421 18.45 5.75C18.0358 5.33579 17.3642 5.33579 16.95 5.75L11.4071 11.2929C11.0166 11.6834 11.0166 12.3166 11.4071 12.7071L16.95 18.25C17.3642 18.6642 18.0358 18.6642 18.45 18.25C18.8642 17.8358 18.8642 17.1642 18.45 16.75L14.2657 12.5657C13.9533 12.2533 13.9533 11.7467 14.2657 11.4343Z" fill="black" />
 									<path d="M8.2657 11.4343L12.45 7.25C12.8642 6.83579 12.8642 6.16421 12.45 5.75C12.0358 5.33579 11.3642 5.33579 10.95 5.75L5.40712 11.2929C5.01659 11.6834 5.01659 12.3166 5.40712 12.7071L10.95 18.25C11.3642 18.6642 12.0358 18.6642 12.45 18.25C12.8642 17.8358 12.8642 17.1642 12.45 16.75L8.2657 12.5657C7.95328 12.2533 7.95328 11.7467 8.2657 11.4343Z" fill="black" />
 								</svg>
 							</span>
+							<!--end::Svg Icon-->
 						</div>
 					</div>
 					<div class="aside-menu flex-column-fluid">
+						<!--begin::Aside Menu-->
 						<div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
+							<!--begin::Menu-->
 							<div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
 								<div class="menu-item">
 									<div class="menu-content pb-2">
 										<span class="menu-section text-muted text-uppercase fs-8 ls-1">Dashboard</span>
-									</div>
-								</div>
-								<div class="menu-item">
-									<a class="menu-link" href="{{ url_for('manage_users') }}">
-										<span class="menu-icon">
-											<span class="svg-icon svg-icon-2">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="black" />
-													<path d="M14.854 11.321C14.7568 11.2282 14.6388 11.1818 14.4998 11.1818H14.3333V10.2272C14.3333 9.61741 14.1041 9.09378 13.6458 8.65628C13.1875 8.21876 12.639 8 12 8C11.361 8 10.8124 8.21876 10.3541 8.65626C9.89574 9.09378 9.66663 9.61739 9.66663 10.2272V11.1818H9.49999C9.36115 11.1818 9.24306 11.2282 9.14583 11.321C9.0486 11.4138 9 11.5265 9 11.6591V14.5227C9 14.6553 9.04862 14.768 9.14583 14.8609C9.24306 14.9536 9.36115 15 9.49999 15H14.5C14.6389 15 14.7569 14.9536 14.8542 14.8609C14.9513 14.768 15 14.6553 15 14.5227V11.6591C15.0001 11.5265 14.9513 11.4138 14.854 11.321ZM13.3333 11.1818H10.6666V10.2272C10.6666 9.87594 10.7969 9.57597 11.0573 9.32743C11.3177 9.07886 11.6319 8.9546 12 8.9546C12.3681 8.9546 12.6823 9.07884 12.9427 9.32743C13.2031 9.57595 13.3333 9.87594 13.3333 10.2272V11.1818Z" fill="black" />
-												</svg>
-											</span>
-										</span>
-										<span class="menu-title">Account Management</span>
-									</a>
-								</div>
-								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-									<span class="menu-link">
-										<span class="menu-icon">
-											<span class="svg-icon svg-icon-2">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<path opacity="0.3" d="M21 10.7192H3C2.4 10.7192 2 11.1192 2 11.7192C2 12.3192 2.4 12.7192 3 12.7192H6V14.7192C6 18.0192 8.7 20.7192 12 20.7192C15.3 20.7192 18 18.0192 18 14.7192V12.7192H21C21.6 12.7192 22 12.3192 22 11.7192C22 11.1192 21.6 10.7192 21 10.7192Z" fill="black" />
-													<path d="M11.6 21.9192C11.4 21.9192 11.2 21.8192 11 21.7192C10.6 21.4192 10.5 20.7191 10.8 20.3191C11.7 19.1191 12.3 17.8191 12.7 16.3191C12.8 15.8191 13.4 15.4192 13.9 15.6192C14.4 15.7192 14.8 16.3191 14.6 16.8191C14.2 18.5191 13.4 20.1192 12.4 21.5192C12.2 21.7192 11.9 21.9192 11.6 21.9192ZM8.7 19.7192C10.2 18.1192 11 15.9192 11 13.7192V8.71917C11 8.11917 11.4 7.71917 12 7.71917C12.6 7.71917 13 8.11917 13 8.71917V13.0192C13 13.6192 13.4 14.0192 14 14.0192C14.6 14.0192 15 13.6192 15 13.0192V8.71917C15 7.01917 13.7 5.71917 12 5.71917C10.3 5.71917 9 7.01917 9 8.71917V13.7192C9 15.4192 8.4 17.1191 7.2 18.3191C6.8 18.7191 6.9 19.3192 7.3 19.7192C7.5 19.9192 7.7 20.0192 8 20.0192C8.3 20.0192 8.5 19.9192 8.7 19.7192ZM6 16.7192C6.5 16.7192 7 16.2192 7 15.7192V8.71917C7 8.11917 7.1 7.51918 7.3 6.91918C7.5 6.41918 7.2 5.8192 6.7 5.6192C6.2 5.4192 5.59999 5.71917 5.39999 6.21917C5.09999 7.01917 5 7.81917 5 8.71917V15.7192V15.8191C5 16.3191 5.5 16.7192 6 16.7192ZM9 4.71917C9.5 4.31917 10.1 4.11918 10.7 3.91918C11.2 3.81918 11.5 3.21917 11.4 2.71917C11.3 2.21917 10.7 1.91916 10.2 2.01916C9.4 2.21916 8.59999 2.6192 7.89999 3.1192C7.49999 3.4192 7.4 4.11916 7.7 4.51916C7.9 4.81916 8.2 4.91918 8.5 4.91918C8.6 4.91918 8.8 4.81917 9 4.71917ZM18.2 18.9192C18.7 17.2192 19 15.5192 19 13.7192V8.71917C19 5.71917 17.1 3.1192 14.3 2.1192C13.8 1.9192 13.2 2.21917 13 2.71917C12.8 3.21917 13.1 3.81916 13.6 4.01916C15.6 4.71916 17 6.61917 17 8.71917V13.7192C17 15.3192 16.8 16.8191 16.3 18.3191C16.1 18.8191 16.4 19.4192 16.9 19.6192C17 19.6192 17.1 19.6192 17.2 19.6192C17.7 19.6192 18 19.3192 18.2 18.9192Z" fill="black" />
-												</svg>
-											</span>
-										</span>
-										<span class="menu-title">Data Management</span>
-										<span class="menu-arrow"></span>
-									</span>
-									<div class="menu-sub menu-sub-accordion menu-active-bg">
-										<a href="{{ url_for('upload_data') }}" class="menu-item menu-accordion">
-											<span class="menu-link">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">Upload Data</span>
-											</span>
-										</a>										
-										<a href="{{ url_for('delete') }}" class="menu-item menu-accordion">
-											<span class="menu-link">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">Delete Data</span>
-											</span>
-										</a>
 									</div>
 								</div>
                                 <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
@@ -112,12 +77,13 @@
 													<rect x="6" y="7" width="12" height="2" rx="1" fill="black" />
 												</svg>
 											</span>
+											<!--end::Svg Icon-->
 										</span>
 										<span class="menu-title">Case Active</span>
 										<span class="menu-arrow"></span>
 									</span>
 									<div class="menu-sub menu-sub-accordion menu-active-bg">
-										<a href="{{ url_for('my_case') }}" class="menu-item menu-accordion">
+										<a href="{{ url_for('my_data') }}" class="menu-item menu-accordion">
 											<span class="menu-link">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
@@ -125,23 +91,23 @@
 												<span class="menu-title">My Case</span>
 											</span>
 										</a>										
-										<a href="{{ url_for('ptp') }}" class="menu-item menu-accordion">
-											<span class="menu-link active">
+										<a href="{{ url_for('user_ptp') }}" class="menu-item menu-accordion">
+											<span class="menu-link">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
 												<span class="menu-title">PTP</span>
 											</span>
 										</a>
-										<a href="{{ url_for('not_active_admin') }}" class="menu-item menu-accordion">
-											<span class="menu-link">
+                                        <a href="{{ url_for('not_active') }}" class="menu-item menu-accordion">
+											<span class="menu-link active">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
 												<span class="menu-title">Not Active</span>
 											</span>
 										</a>
-										<a href="{{ url_for('no_answer_admin') }}" class="menu-item menu-accordion">
+										<a href="{{ url_for('no_answer') }}" class="menu-item menu-accordion">
 											<span class="menu-link">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
@@ -149,7 +115,7 @@
 												<span class="menu-title">No Answer</span>
 											</span>
 										</a>
-										<a href="{{ url_for('answer_not_ptp_admin') }}" class="menu-item menu-accordion">
+										<a href="{{ url_for('answer_no_ptp') }}" class="menu-item menu-accordion">
 											<span class="menu-link">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
@@ -157,7 +123,7 @@
 												<span class="menu-title">Answer but Not PTP</span>
 											</span>
 										</a>
-										<a href="{{ url_for('paid_admin') }}" class="menu-item menu-accordion">
+										<a href="{{ url_for('lunas') }}" class="menu-item menu-accordion">
 											<span class="menu-link">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
@@ -168,7 +134,9 @@
 									</div>
 								</div>
 							</div>
+							<!--end::Menu-->
 						</div>
+						<!--end::Aside Menu-->
 					</div>
 				</div>
 				<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
@@ -176,12 +144,14 @@
 						<div class="container-fluid d-flex align-items-stretch justify-content-between">
 							<div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
 								<div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_aside_mobile_toggle">
+									<!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
 									<span class="svg-icon svg-icon-2x mt-1">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 											<path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="black" />
 											<path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="black" />
 										</svg>
 									</span>
+									<!--end::Svg Icon-->
 								</div>
 							</div>
 							<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
@@ -190,8 +160,11 @@
 								</a>
 							</div>
 							<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+								<!--begin::Navbar-->
 								<div class="d-flex align-items-stretch" id="kt_header_nav">
+									<!--begin::Menu wrapper-->
 									<div class="header-menu align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_header_menu_mobile_toggle" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
+										<!--begin::Menu-->
 										<div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
 											<div class="menu-item me-lg-1">
 												<a class="menu-link py-3" href="{{ url_for('dashboard') }}">
@@ -199,34 +172,44 @@
 												</a>
 											</div>
 											<div class="menu-item me-lg-1">
-												<a class="menu-link active py-3" href="{{ url_for('my_case') }}">
-													<span class="menu-title">PTP</span>
+												<a class="menu-link py-3" href="{{ url_for('my_data') }}">
+													<span class="menu-title">My Case</span>
 												</a>
 											</div>
                                             <div class="menu-item me-lg-1">
-												<a class="menu-link py-3" href="{{ url_for('not_active_admin') }}">
+												<a class="menu-link py-3" href="{{ url_for('user_ptp') }}">
+													<span class="menu-title">PTP</span>
+												</a>
+											</div>
+											<div class="menu-item me-lg-1">
+												<a class="menu-link active py-3" href="{{ url_for('not_active') }}">
 													<span class="menu-title">Not Active</span>
 												</a>
 											</div>
 											<div class="menu-item me-lg-1">
-												<a class="menu-link py-3" href="{{ url_for('no_answer_admin') }}">
+												<a class="menu-link py-3" href="{{ url_for('no_answer') }}">
 													<span class="menu-title">No Answer</span>
 												</a>
 											</div>
 											<div class="menu-item me-lg-1">
-												<a class="menu-link py-3" href="{{ url_for('answer_not_ptp_admin') }}">
+												<a class="menu-link py-3" href="{{ url_for('answer_no_ptp') }}">
 													<span class="menu-title">Answer but Not PTP</span>
 												</a>
 											</div>
-											<div class="menu-item me-lg-1">
-												<a class="menu-link py-3" href="{{ url_for('paid_admin') }}">
+                                            <div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('lunas') }}">
 													<span class="menu-title">Paid</span>
 												</a>
 											</div>
 										</div>
+										<!--end::Menu-->
 									</div>
+									<!--end::Menu wrapper-->
 								</div>
+								<!--end::Navbar-->
+								<!--begin::Topbar-->
 								<div class="d-flex align-items-stretch flex-shrink-0">
+									<!--begin::Toolbar wrapper-->
 									<div class="d-flex align-items-stretch flex-shrink-0">
 										<div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 											<div class="fw-bolder d-flex align-items-center fs-8">Extention Number ( {{ num_sip }} )
@@ -238,6 +221,7 @@
 													<span class="badge badge-light-danger fw-bolder fs-8 px-2 py-1 ms-2">▼</span>
 												</div>
 											</div>
+											<!--begin::Menu-->
 											<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-200px" data-kt-menu="true">
 												<div class="menu-item px-5 my-1">
 													<a href="#" class="menu-link px-5" data-bs-toggle="modal" data-bs-target="#gantiSipModal">Ganti No Ext</a>
@@ -246,53 +230,31 @@
 													<a href="{{ url_for('logout') }}" class="menu-link px-5">Sign Out</a>
 												</div>
 											</div>
+											<!--end::Menu-->
+											<!--end::Menu wrapper-->
 										</div>
+										<!--end::User -->
+										<!--begin::Heaeder menu toggle-->
 										<div class="d-flex align-items-center d-lg-none ms-2 me-n3" title="Show header menu">
 											<div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_header_menu_mobile_toggle">
+												<!--begin::Svg Icon | path: icons/duotune/text/txt001.svg-->
 												<span class="svg-icon svg-icon-1">
 													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 														<path d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z" fill="black" />
 														<path opacity="0.3" d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM14 20V19C14 18.4 13.6 18 13 18H3C2.4 18 2 18.4 2 19V20C2 20.6 2.4 21 3 21H13C13.6 21 14 20.6 14 20Z" fill="black" />
 													</svg>
 												</span>
+												<!--end::Svg Icon-->
 											</div>
 										</div>
+										<!--end::Heaeder menu toggle-->
 									</div>
+									<!--end::Toolbar wrapper-->
 								</div>
+								<!--end::Topbar-->
 							</div>
 						</div>
 					</div>
-					
-					<div class="modal fade" id="gantiSipModal" tabindex="-1" aria-labelledby="gantiSipModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-						  <form method="POST" action="{{ url_for('ganti_sip') }}">
-							<div class="modal-content">
-							  <div class="modal-header">
-								<h5 class="modal-title" id="gantiSipModalLabel">Ganti Nomor SIP</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-							  </div>
-							  <div class="modal-body">
-								<div class="mb-3">
-								  <label for="num_sip" class="form-label">Nomor SIP</label>
-								  <input type="text" class="form-control" id="num_sip" name="num_sip" value="{{ current_user.num_sip or '' }}">
-								</div>
-								<div class="mb-3">
-								  <label for="pas_sip" class="form-label">Password SIP</label>
-								  <div class="input-group">
-									<input type="password" class="form-control" id="pas_sip" name="pas_sip" value="{{ current_user.pas_sip or '' }}">
-									<button class="btn btn-outline-secondary" type="button" id="togglePassword">
-									  <i class="bi bi-eye" id="toggleIcon"></i>
-									</button>
-								  </div>
-								</div>
-							  </div>
-							  <div class="modal-footer">
-								<button type="submit" class="btn btn-primary">Simpan</button>
-							  </div>
-							</div>
-						  </form>
-						</div>
-					  </div>
 					<div class="content d-flex flex-column flex-column-fluid " id="kt_content">
                         <div id="kt_content_container" class="container-xxl" style="margin-top: -50px;">
                             <div class="card mb-6 mb-xl-9">
@@ -331,7 +293,7 @@
                                                     placeholder="Max" />
                                             </div>
                                             <button class="btn btn-sm btn-primary" type="submit">Cari</button>
-
+											
 											<div class="me-4">
 												<a href="#" class="btn btn-sm btn-flex btn-success btn-active-primary fw-bolder" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
 												<span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
@@ -375,7 +337,7 @@
 																</label>
 															</div>
 														</div>
-														<!-- <div class="mb-10">
+														<div class="mb-10">
 															<label class="form-label fw-bold">Principal Amount:</label>
 															<div class="d-flex">
 																<label class="form-check form-check-sm form-check-custom form-check-solid me-5 form-check-inline">
@@ -389,43 +351,34 @@
 																	<span class="form-check-label">Low-High</span>
 																</label>
 															</div>
-														</div> -->
+														</div>
 														<div class="d-flex justify-content-end">
-															<a href="{{ url_for('my_data') }}" class="btn btn-sm btn-light btn-active-light-primary me-2">Reset</a>
+															<a href="{{ url_for('not_active') }}" class="btn btn-sm btn-light btn-active-light-primary me-2">Reset</a>
 															<button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
 														</div>
 													</div>
 												</div>
 											</div>
                                         </form>
-                                        <!-- <div class="ms-auto">
-                                            <a href="#" class="btn btn-sm btn-success fs-4" data-bs-toggle="modal"
-                                                id="kt_toolbar_primary_button">
-                                                <i class="fas fa-phone-alt me-1"></i> Auto Call
-                                            </a>
-                                        </div> -->
                                     </div>
                     
                                     <div class="card-body pt-0">
                                         <div class="table-responsive">
-                                            <table id="kt_profile_overview_table"
-                                                class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bolder">
+                                            <table id="kt_profile_overview_table" class="table table-bordered table-striped align-middle fw-bolder">
                                                 <thead class="fs-7 text-gray-400 text-uppercase">
                                                     <tr>
                                                         <th class="min-w-100px" data-orderable="false">Order Number</th>
-                                                        <th class="min-w-150px text-center" data-orderable="false">Customer Name</i></th>
-                                                        <th class="text-center" data-orderable="false">
-															Phone | <i class="fas fa-eye me-1" style="cursor: pointer;" onclick="showAllPhones()"></i>
-														</th>
+                                                        <th class="min-w-150px text-center" data-orderable="false">Cust Name</th>
+                                                        <th class="min-w-100px text-center" data-orderable="false">Phone Number</th>
                                                         <th class="min-w-50px text-center" data-orderable="false">OVD</th>
-                                                        <th class="min-w-100px text-center" data-orderable="false">Principal Amt</th>
-                                                        <th class="min-w-100px text-center" data-orderable="false">Outstanding Amt</th>
-                                                        <!-- <th class="min-w-50px text-center" data-orderable="false">Operation</th> -->
+                                                        <th class="min-w-100px text-center" data-orderable="false">Principal Amount</th>
+                                                        <th class="min-w-100px text-center" data-orderable="false">Outstanding</th>
+                                                        <th class="min-w-50px text-center" data-orderable="false">Operation</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="fs-6">
                                                     {% for data in data_list %}
-													<tr>
+                                                    <tr>
                                                         <td>
                                                             <div class="d-flex align-items-center">
                                                                 <div class="d-flex flex-column justify-content-center">
@@ -436,23 +389,31 @@
                                                             </div>
                                                         </td>
                                                         <td class="text-center">
-                                                            <a href="{{ url_for('detail_data', id=data.id) }}" style="text-decoration: none;">
+                                                            <a href="{{ url_for('user_detail_data', id=data.id) }}" style="text-decoration: none;">
 																{{ data.nama_nasabah }}
-															</a>										
+															</a>														
+                                                            <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#callModal"
+																onclick="openCallModal('{{ data.id }}', '{{ data.nama_nasabah }}', '{{ data.total_tagihan }}', '{{ data.phone }}' , '{{ data.remark }}')">
+																<i class="fas fa-phone me-1" style="color: rgb(0, 140, 255); cursor: pointer;"></i>
+															</a>										 -->
                                                         </td>
                                                         <td class="text-center">
-                                                            <span class="phone-number" id="phone-{{ loop.index }}" 
-                                                                  data-full-number="0{{ data.phone }}" 
-                                                                  data-hidden-number="0{{ data.phone[:3] }}****{{ data.phone[-3:] }}">
-                                                                0{{ data.phone[:3] }}****{{ data.phone[-3:] }}
-                                                            </span>
-                                                            <i class="fas fa-eye me-1" style="margin-left: 5px; cursor: pointer;" onclick="togglePhoneNumber({{ loop.index }})"></i>
-                                                        </td>                                                        
+															{% if data.phone %}
+																<span class="phone-number" id="phone-{{ loop.index }}" 
+																	  data-full-number="0{{ data.phone }}" 
+																	  data-hidden-number="0{{ data.phone[:3] }}****{{ data.phone[-4:] }}">
+																	0{{ data.phone[:3] }}****{{ data.phone[-4:] }}
+																</span>
+															{% else %}
+																<span class="text-muted">No Phone</span>
+															{% endif %}
+															<i class="fas fa-eye me-1" style="margin-left: 5px; cursor: pointer;" onclick="togglePhoneNumber({{ loop.index }})"></i>
+														</td>																											   
                                                         <td class="text-center">{{ data.overdue }}</td>
                                                         <td class="text-center">{{ "{:,}".format(data.pokok_pinjaman_int).replace(",", ".") }}</td>
                                                         <td class="text-center">{{ "{:,}".format(data.total_tagihan_int).replace(",", ".") }}</td>
-                                                        <!-- <td class="text-center">
-															<button class="btn btn-sm btn-light btn-active-success fw-bolder"
+                                                        <td class="text-center">
+															<button class="btn btn-sm btn-light btn-active-success fw-bolder me-2"
 																data-bs-toggle="modal" 
 																data-bs-target="#whatsappModal"
 																data-phone="{{ data.phone }}"
@@ -465,41 +426,62 @@
 																	<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
 																		<path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 29.079097 3.1186875 32.88588 4.984375 36.208984 L 2.0371094 46.730469 A 1.0001 1.0001 0 0 0 3.2402344 47.970703 L 14.210938 45.251953 C 17.434629 46.972929 21.092591 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 21.278025 46 17.792121 45.029635 14.761719 43.333984 A 1.0001 1.0001 0 0 0 14.033203 43.236328 L 4.4257812 45.617188 L 7.0019531 36.425781 A 1.0001 1.0001 0 0 0 6.9023438 35.646484 C 5.0606869 32.523592 4 28.890107 4 25 C 4 13.390466 13.390466 4 25 4 z M 16.642578 13 C 16.001539 13 15.086045 13.23849 14.333984 14.048828 C 13.882268 14.535548 12 16.369511 12 19.59375 C 12 22.955271 14.331391 25.855848 14.613281 26.228516 L 14.615234 26.228516 L 14.615234 26.230469 C 14.588494 26.195329 14.973031 26.752191 15.486328 27.419922 C 15.999626 28.087653 16.717405 28.96464 17.619141 29.914062 C 19.422612 31.812909 21.958282 34.007419 25.105469 35.349609 C 26.554789 35.966779 27.698179 36.339417 28.564453 36.611328 C 30.169845 37.115426 31.632073 37.038799 32.730469 36.876953 C 33.55263 36.755876 34.456878 36.361114 35.351562 35.794922 C 36.246248 35.22873 37.12309 34.524722 37.509766 33.455078 C 37.786772 32.688244 37.927591 31.979598 37.978516 31.396484 C 38.003976 31.104927 38.007211 30.847602 37.988281 30.609375 C 37.969311 30.371148 37.989581 30.188664 37.767578 29.824219 C 37.302009 29.059804 36.774753 29.039853 36.224609 28.767578 C 35.918939 28.616297 35.048661 28.191329 34.175781 27.775391 C 33.303883 27.35992 32.54892 26.991953 32.083984 26.826172 C 31.790239 26.720488 31.431556 26.568352 30.914062 26.626953 C 30.396569 26.685553 29.88546 27.058933 29.587891 27.5 C 29.305837 27.918069 28.170387 29.258349 27.824219 29.652344 C 27.819619 29.649544 27.849659 29.663383 27.712891 29.595703 C 27.284761 29.383815 26.761157 29.203652 25.986328 28.794922 C 25.2115 28.386192 24.242255 27.782635 23.181641 26.847656 L 23.181641 26.845703 C 21.603029 25.455949 20.497272 23.711106 20.148438 23.125 C 20.171937 23.09704 20.145643 23.130901 20.195312 23.082031 L 20.197266 23.080078 C 20.553781 22.728924 20.869739 22.309521 21.136719 22.001953 C 21.515257 21.565866 21.68231 21.181437 21.863281 20.822266 C 22.223954 20.10644 22.02313 19.318742 21.814453 18.904297 L 21.814453 18.902344 C 21.828863 18.931014 21.701572 18.650157 21.564453 18.326172 C 21.426943 18.001263 21.251663 17.580039 21.064453 17.130859 C 20.690033 16.232501 20.272027 15.224912 20.023438 14.634766 L 20.023438 14.632812 C 19.730591 13.937684 19.334395 13.436908 18.816406 13.195312 C 18.298417 12.953717 17.840778 13.022402 17.822266 13.021484 L 17.820312 13.021484 C 17.450668 13.004432 17.045038 13 16.642578 13 z M 16.642578 15 C 17.028118 15 17.408214 15.004701 17.726562 15.019531 C 18.054056 15.035851 18.033687 15.037192 17.970703 15.007812 C 17.906713 14.977972 17.993533 14.968282 18.179688 15.410156 C 18.423098 15.98801 18.84317 16.999249 19.21875 17.900391 C 19.40654 18.350961 19.582292 18.773816 19.722656 19.105469 C 19.863021 19.437122 19.939077 19.622295 20.027344 19.798828 L 20.027344 19.800781 L 20.029297 19.802734 C 20.115837 19.973483 20.108185 19.864164 20.078125 19.923828 C 19.867096 20.342656 19.838461 20.445493 19.625 20.691406 C 19.29998 21.065838 18.968453 21.483404 18.792969 21.65625 C 18.639439 21.80707 18.36242 22.042032 18.189453 22.501953 C 18.016221 22.962578 18.097073 23.59457 18.375 24.066406 C 18.745032 24.6946 19.964406 26.679307 21.859375 28.347656 C 23.05276 29.399678 24.164563 30.095933 25.052734 30.564453 C 25.940906 31.032973 26.664301 31.306607 26.826172 31.386719 C 27.210549 31.576953 27.630655 31.72467 28.119141 31.666016 C 28.607627 31.607366 29.02878 31.310979 29.296875 31.007812 L 29.298828 31.005859 C 29.655629 30.601347 30.715848 29.390728 31.224609 28.644531 C 31.246169 28.652131 31.239109 28.646231 31.408203 28.707031 L 31.408203 28.708984 L 31.410156 28.708984 C 31.487356 28.736474 32.454286 29.169267 33.316406 29.580078 C 34.178526 29.990889 35.053561 30.417875 35.337891 30.558594 C 35.748225 30.761674 35.942113 30.893881 35.992188 30.894531 C 35.995572 30.982516 35.998992 31.07786 35.986328 31.222656 C 35.951258 31.624292 35.8439 32.180225 35.628906 32.775391 C 35.523582 33.066746 34.975018 33.667661 34.283203 34.105469 C 33.591388 34.543277 32.749338 34.852514 32.4375 34.898438 C 31.499896 35.036591 30.386672 35.087027 29.164062 34.703125 C 28.316336 34.437036 27.259305 34.092596 25.890625 33.509766 C 23.114812 32.325956 20.755591 30.311513 19.070312 28.537109 C 18.227674 27.649908 17.552562 26.824019 17.072266 26.199219 C 16.592866 25.575584 16.383528 25.251054 16.208984 25.021484 L 16.207031 25.019531 C 15.897202 24.609805 14 21.970851 14 19.59375 C 14 17.077989 15.168497 16.091436 15.800781 15.410156 C 16.132721 15.052495 16.495617 15 16.642578 15 z"></path>
 																	</svg>
-																  </span>
-																Whatsapp
+																</span>
+																WhatsApp
 															</button>
-														</td>														 -->
+
+															<button class="btn btn-sm btn-light btn-active-primary fw-bolder"
+																data-bs-toggle="modal" 
+																data-bs-target="#callModal"
+																data-phone="{{ data.phone }}"
+																data-overdue="{{ data.overdue }}"
+																data-tagihan="{{ data.total_tagihan }}"
+																data-nama="{{ username }}"
+																data-id="{{ id_system }}"
+																data-group="{{ group_name }}"
+																onclick="openCallModal('{{ data.id }}', '{{ data.nama_nasabah }}', '{{ data.total_tagihan }}', '{{ data.phone }}' , '{{ data.remark }}')">
+																<span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
+																	<svg id='Incoming_Call_24' width='100' height='100' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+																	<g transform="matrix(1.43 0 0 1.43 12 12)" >
+																	<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0, 0, 0); fill-rule: nonzero; opacity: 1;" transform=" translate(-7, -8)" d="M 0 1 L 0 5 C 0 10.523 4.477 15 10 15 L 14 15 L 14 9 L 10 9 L 7.4960938 11.503906 L 3.4960938 7.5039062 L 6 5 L 6 1 L 0 1 z M 10 2 L 8 4 L 10 6 L 11 6 L 11 5 L 14 5 L 14 3 L 11 3 L 11 2 L 10 2 z" stroke-linecap="round" />
+																	</g>
+																	</svg>
+																</span>
+																Call
+															</button>
+														</td>														
                                                     </tr>
                                                     {% endfor %}
                                                 </tbody>
                                             </table>
 											<nav aria-label="Page navigation">
-												<ul class="pagination justify-content-start">
-													{% if current_page > 1 %}
-													<li class="page-item">
-														<a class="page-link" href="{{ url_for('ptp') }}?page={{ current_page - 1 }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
-															&laquo;
-														</a>
-													</li>
-													{% endif %}
-											
-													{% for i in range(1, total_pages + 1) %}
-													<li class="page-item {% if i == current_page %}active{% endif %}">
-														<a class="page-link" href="{{ url_for('ptp') }}?page={{ i }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
-															{{ i }}
-														</a>
-													</li>
-													{% endfor %}
-											
-													{% if current_page < total_pages %}
-													<li class="page-item">
-														<a class="page-link" href="{{ url_for('ptp') }}?page={{ current_page + 1 }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
-															&raquo;
-														</a>
-													</li>
-													{% endif %}
-												</ul>
-											</nav>											
+                                                <ul class="pagination justify-content-start">
+                                                    {% if current_page > 1 %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="{{ url_for('not_active') }}?page={{ current_page - 1 }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
+                                                            &laquo;
+                                                        </a>
+                                                    </li>
+                                                    {% endif %}
+                                            
+                                                    {% for i in range(1, total_pages + 1) %}
+                                                    <li class="page-item {% if i == current_page %}active{% endif %}">
+                                                        <a class="page-link" href="{{ url_for('not_active') }}?page={{ i }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
+                                                            {{ i }}
+                                                        </a>
+                                                    </li>
+                                                    {% endfor %}
+                                            
+                                                    {% if current_page < total_pages %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="{{ url_for('not_active') }}?page={{ current_page + 1 }}{% for key, val in query_params.items() %}&{{ key }}={{ val }}{% endfor %}">
+                                                            &raquo;
+                                                        </a>
+                                                    </li>
+                                                    {% endif %}
+                                                </ul>
+                                            </nav>
+                                                                                    
                                         </div>
                                     </div> 
                                 </div>
@@ -507,49 +489,104 @@
                         </div>
                     </div>
 
-					<div class="modal fade" id="callModal" tabindex="-1" aria-labelledby="callModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+					<!-- Modal -->
+					<div class="modal fade" id="gantiSipModal" tabindex="-1" aria-labelledby="gantiSipModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+						  <form method="POST" action="{{ url_for('ganti_sip') }}">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<h5 class="modal-title" id="gantiSipModalLabel">Ganti Nomor SIP</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+							  </div>
+							  <div class="modal-body">
+								<div class="mb-3">
+								  <label for="num_sip" class="form-label">Nomor SIP</label>
+								  <input type="text" class="form-control" id="num_sip" name="num_sip" value="{{ current_user.num_sip or '' }}">
+								</div>
+								<div class="mb-3">
+								  <label for="pas_sip" class="form-label">Password SIP</label>
+								  <div class="input-group">
+									<input type="password" class="form-control" id="pas_sip" name="pas_sip" value="{{ current_user.pas_sip or '' }}">
+									<button class="btn btn-outline-secondary" type="button" id="togglePassword">
+									  <i class="bi bi-eye" id="toggleIcon"></i>
+									</button>
+								  </div>
+								</div>
+							  </div>
+							  <div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Simpan</button>
+							  </div>
+							</div>
+						  </form>
+						</div>
+					  </div>
+                    
+					  <div class="modal fade" id="callModal" tabindex="-1" aria-labelledby="callModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 						<div class="modal-dialog modal-dialog-centered">
 						  <div class="modal-content">
-							<form method="POST" action="{{ url_for('admin_submit_call') }}">
-								<input type="hidden" name="data_id" id="modalDataId">
-								<div class="modal-header">
-								  <h5 class="modal-title" id="callModalLabel">Detail Panggilan</h5>
-								  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+							<form id="callForm" method="POST" action="{{ url_for('submit_call') }}">
+							  <input type="hidden" name="data_id" id="modalDataId">
+							  <div class="modal-header">
+								<h5 class="modal-title" id="callModalLabel">Detail Panggilan</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+							  </div>
+							  <div class="modal-body bg-light rounded-3 px-4 py-3">
+								<div class="mb-4 p-3 border rounded shadow-sm bg-white">
+									<div class="mb-2">
+									<label class="form-label fw-semibold text-secondary">
+										<i class="bi bi-person-fill me-1 text-dark"></i> Nama :
+									</label>
+									<div id="modalNamaNasabah" class="ps-4 text-dark fw-bold">-</div>
+									</div>
+									<div class="mb-2">
+									<label class="form-label fw-semibold text-secondary">
+										<i class="bi bi-telephone-fill me-1 text-dark"></i> Nomor Telepon :
+									</label>
+									<div id="modalNomorTelepon" class="ps-4 text-dark fw-bold">-</div>
+									</div>
+									<div>
+									<label class="form-label fw-semibold text-secondary">
+										<i class="bi bi-cash-stack me-1 text-dark"></i> Total Tagihan :
+									</label>
+									<div id="modalTotalTagihan" class="ps-4 text-danger fw-bold fs-5">-</div>
+									</div>
 								</div>
-								<div class="modal-body">
-								  <div class="mb-3">
-									<label class="form-label"><strong>Nama :</strong></label>
-									<div id="modalNamaNasabah">-</div>
-								  </div>
-								  <div class="mb-3">
-									<label class="form-label"><strong>Nomor Telepon :</strong></label>
-									<div id="modalNomorTelepon">-</div>
-								</div>
-								  <div class="mb-3">
-									<label class="form-label"><strong>Total Tagihan :</strong></label>
-									<div id="modalTotalTagihan">-</div>
-								  </div>
-								  <div class="mb-3">
-									<label for="remark" class="form-label"><strong>Remark :</strong></label>
-									<select id="remark" name="remark" class="form-select">
-									  <option value="not_ptp">Not PTP</option>
-									  <option value="ptp">PTP</option>
+
+								<div class="mb-4">
+									<label for="remark" class="form-label fw-bold text-primary">
+									<i class="bi bi-chat-left-text-fill me-1"></i> Remark :
+									</label>
+									<select id="remark" name="remark" class="form-select shadow-sm rounded-pill px-4 py-2" style="transition: all 0.3s ease;">
+									<option value="" disabled selected>-- Pilih Remark --</option>
+									<option value="1">📵 Not PTP</option>
+									<option value="2">📞 PTP</option>
+									<option value="3">🔕 Not Active</option>
+									<option value="4">☎️ No Answer</option>
+									<option value="5">📴 Answer but Not PTP</option>
+									<option value="6">✅ Sudah Bayar</option>
 									</select>
-								  </div>
-								  <div class="mb-3">
-									<label for="note" class="form-label"><strong>Notes :</strong></label>
-									<textarea class="form-control" id="note" name="note" rows="3" placeholder="Tambahkan catatan di sini..."></textarea>
-								  </div>
 								</div>
-								<div class="modal-footer">
-								  <button type="button" class="btn btn-primary" onclick="callWithMicroSIP()">Panggil</button>
-								  <button type="submit" class="btn btn-success">Submit</button>
+
+								<div class="mb-3">
+									<label for="note" class="form-label fw-bold text-primary">
+									<i class="bi bi-journal-text me-1"></i> Notes :
+									</label>
+									<textarea class="form-control shadow-sm rounded-3" id="note" name="note" rows="3" placeholder="Tambahkan catatan di sini..." style="transition: all 0.3s ease;"></textarea>
 								</div>
-							  </form>
-							  
+								</div>
+							  <div class="modal-footer d-flex justify-content-between px-4 py-3 bg-white border-top rounded-bottom">
+								<button type="button" class="btn btn-outline-primary d-flex align-items-center px-4 py-2 shadow-sm" onclick="callWithMicroSIP()" style="transition: all 0.3s ease;">
+									<i class="bi bi-telephone-outbound-fill me-2"></i> Panggil Nasabah
+								</button>
+
+								<button type="submit" class="btn btn-success d-flex align-items-center px-4 py-2 shadow-sm" style="transition: all 0.3s ease;">
+									<i class="bi bi-send-check-fill me-2"></i> Submit Data
+								</button>
+							  </div>
+							</form>
 						  </div>
 						</div>
-					  </div>      
+					  </div>
 					<div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
 						<div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
 							<div class="text-dark order-2 order-md-1">
@@ -570,6 +607,7 @@
 					</div>
 					<div class="modal-body">
 						<textarea id="whatsappMessage" class="form-control" rows="17"></textarea>
+
 							
 					</div>
 					<div class="modal-footer">
@@ -598,6 +636,15 @@
 		<script src="../static/assets/js/custom/apps/chat/chat.js"></script>
 		<script src="../static/assets/js/custom/modals/create-app.js"></script>
 		<script src="../static/assets/js/custom/modals/upgrade-plan.js"></script>
+		<script>
+            setTimeout(function() {
+                const alert = document.getElementById("flash-alert");
+                if (alert) {
+                    let bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                    bsAlert.close();
+                }
+            }, 3000);
+        </script>
         <script>
             document.getElementById('submitModal').addEventListener('click', function () {
               const modalEl = document.getElementById('callModal');
@@ -658,7 +705,7 @@ Terima kasih.`;
 				return rupiah;
 			}
 			</script>
-			  
+			 
           <script>
             function togglePhoneNumber(index) {
             var phoneElement = document.getElementById("phone-" + index);
@@ -674,43 +721,13 @@ Terima kasih.`;
 
         </script>
 		<script>
-			let phonesVisible = false;
-
-			function showAllPhones() {
-				var phoneElements = document.querySelectorAll(".phone-number");
-
-				phoneElements.forEach(function(phoneElement) {
-					var fullPhoneNumber = phoneElement.getAttribute("data-full-number");
-					var hiddenPhoneNumber = phoneElement.getAttribute("data-hidden-number");
-
-					if (!phonesVisible) {
-						phoneElement.innerHTML = fullPhoneNumber;
-					} else {
-						phoneElement.innerHTML = hiddenPhoneNumber;
-					}
-				});
-
-				phonesVisible = !phonesVisible;
-			}
-		</script>
-
-		  <script>
-			document.getElementById('togglePassword').addEventListener('click', function () {
-			  const passwordInput = document.getElementById('pas_sip');
-			  const icon = document.getElementById('toggleIcon');
-			  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-			  passwordInput.setAttribute('type', type);
-			  icon.classList.toggle('bi-eye');
-			  icon.classList.toggle('bi-eye-slash');
-			});
-		  </script>
-		  <script>
 			const callModal = document.getElementById('callModal');
 			callModal.addEventListener('show.bs.modal', function (event) {
 			  const button = event.relatedTarget;
 			  const nama = button.getAttribute('data-nama');
 			  const tagihan = button.getAttribute('data-tagihan');
 			  const remark = button.getAttribute('data-remark');
+              
 			  const id = button.getAttribute('data-id');
 		  
 			  callModal.querySelector('.modal-body div[data-field="nama"]').textContent = nama;
@@ -724,28 +741,62 @@ Terima kasih.`;
 				document.getElementById('modalDataId').value = id;
 				document.getElementById('modalNamaNasabah').innerText = nama;
 				document.getElementById('modalNomorTelepon').innerText = phone;
-				document.getElementById('modalTotalTagihan').innerText = 'Rp ' + tagihan;
+				document.getElementById('modalTotalTagihan').innerText = tagihan;
 				document.getElementById('remark').value = remark;
-				document.getElementById('note').value = ''; 
+				document.getElementById('note').value = '';
 			}
 			</script>
-		  <script>
-			document.querySelector('#callModal form').addEventListener('submit', function (e) {
-				const noteField = document.getElementById('note');
-				if (!noteField.value.trim()) {
-					noteField.removeAttribute('name');
-				}
-			});
-			</script>		
 			<script>
-				function callWithMicroSIP() {
-					let nomor = document.getElementById("modalNomorTelepon").innerText.trim();
+				document.getElementById('callForm').addEventListener('submit', function (e) {
+					const noteField = document.getElementById('note');
+					if (!noteField.value.trim()) {
+						noteField.removeAttribute('name');
+					}
+				});
+				</script>
+		  <script>
+			function callWithMicroSIP() {
+				let nomor = document.getElementById("modalNomorTelepon").innerText.trim();
+			
+				const domain = "ld.infin8link.com:7060";
+				const sipURL = `sip:${nomor}@${domain}`;
 				
-					const domain = "ld.infin8link.com:7060";
-					const sipURL = `sip:${nomor}@${domain}`;
-					
-					window.location.href = sipURL;
-				}
-			</script>
+				window.location.href = sipURL;
+			}
+		</script>
+		<script>
+			document.getElementById('togglePassword').addEventListener('click', function () {
+			  const passwordInput = document.getElementById('pas_sip');
+			  const icon = document.getElementById('toggleIcon');
+			  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+			  passwordInput.setAttribute('type', type);
+			  icon.classList.toggle('bi-eye');
+			  icon.classList.toggle('bi-eye-slash');
+			});
+		  </script>
+		  <script>
+    function applySort() {
+        // Customer Name
+        const customerRadio = document.querySelector('input[name="filter_customer_name"]:checked');
+        if (customerRadio) {
+            document.getElementById('customer_name').value = customerRadio.value;
+        }
+
+        // Principal
+        const principalRadio = document.querySelector('input[name="filter_principal"]:checked');
+        if (principalRadio) {
+            document.getElementById('principal').value = principalRadio.value;
+        }
+
+        // Outstanding
+        const outstandingRadio = document.querySelector('input[name="filter_outstanding"]:checked');
+        if (outstandingRadio) {
+            document.getElementById('outstanding').value = outstandingRadio.value;
+        }
+
+        // Submit form
+        document.getElementById('filterForm').submit();
+    }
+</script>
 	</body>
 </html>

@@ -24,6 +24,12 @@
 		<link href="../static/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="../static/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
+		<style>
+			.hoverable:hover {
+				background-color: #f8fafd;
+				transition: 0.2s ease-in-out;
+			}
+		</style>
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
@@ -81,7 +87,7 @@
 										<span class="menu-section text-muted text-uppercase fs-8 ls-1">Dashboard</span>
 									</div>
 								</div>
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
 									<span class="menu-link">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
@@ -93,7 +99,7 @@
 											</span>
 											<!--end::Svg Icon-->
 										</span>
-										<span class="menu-title">Praktik Penagihan</span>
+										<span class="menu-title">Case Active</span>
 										<span class="menu-arrow"></span>
 									</span>
 									<div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -111,6 +117,38 @@
 													<span class="bullet bullet-dot"></span>
 												</span>
 												<span class="menu-title">PTP</span>
+											</span>
+										</a>
+										<a href="{{ url_for('not_active') }}" class="menu-item menu-accordion">
+											<span class="menu-link">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Not Active</span>
+											</span>
+										</a>
+										<a href="{{ url_for('not_active') }}" class="menu-item menu-accordion">
+											<span class="menu-link">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">No Answer</span>
+											</span>
+										</a>
+										<a href="{{ url_for('not_active') }}" class="menu-item menu-accordion">
+											<span class="menu-link">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Answer but Not PTP</span>
+											</span>
+										</a>
+										<a href="{{ url_for('lunas') }}" class="menu-item menu-accordion">
+											<span class="menu-link">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Paid</span>
 											</span>
 										</a>
 									</div>
@@ -149,7 +187,7 @@
 							<!--begin::Mobile logo-->
 							<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 								<a href="../dist/index.html" class="d-lg-none">
-									<img alt="Logo" src="../static/assets/media/logos/logo-2.svg" class="h-30px" />
+									<img alt="Logo" src="../static/assets/logo/vjr3.png" class="h-30px" />
 								</a>
 							</div>
 							<!--end::Mobile logo-->
@@ -176,10 +214,25 @@
 													<span class="menu-title">PTP</span>
 												</a>
 											</div>
-											<div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item here show menu-lg-down-accordion me-lg-1">
-												<span class="menu-link py-3">
-													<span class="menu-title">Personal Info</span>
-												</span>
+											<div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('not_active') }}">
+													<span class="menu-title">Not Active</span>
+												</a>
+											</div>
+											<div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('no_answer') }}">
+													<span class="menu-title">No Answer</span>
+												</a>
+											</div>
+											<div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('answer_no_ptp') }}">
+													<span class="menu-title">Answer but Not PTP</span>
+												</a>
+											</div>
+											<div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('lunas') }}">
+													<span class="menu-title">Lunas</span>
+												</a>
 											</div>
 										</div>
 										<!--end::Menu-->
@@ -250,17 +303,6 @@
 										<div class="card-title m-0">
 											<h3 class="fw-bolder m-0">Personal Info</h3>
 										</div>
-										<!--begin::Card title-->
-										<!--begin::Card toolbar-->
-										<div class="card-toolbar my-1">
-											<!--begin::Select-->
-											<div class="me-6 my-1">
-												<a href="#" class="btn btn-sm btn-success fs-4" data-bs-toggle="modal" id="kt_toolbar_primary_button">
-													<i class="fas fa-phone-alt me-1"></i> Auto Call
-												  </a>	
-											</div>
-										</div>
-										<!--begin::Card toolbar-->
 									</div>
                                     <div class="card-body p-9">
                                         <div class="row">
@@ -268,7 +310,7 @@
                                             <div class="col-lg-6">
                                               <div class="row mb-7">
                                                 <label class="col-lg-12 fw-bold fs-3" style="color: black;">
-                                                  <i class="fa fa-user fa-2x me-2" style="color: black;"></i> Basic Information
+                                                  <i class="fa fa-user fa-2x me-2  text-primary"></i> Basic Information
                                                 </label>
                                               </div>
 
@@ -289,7 +331,7 @@
                                               <div class="row mb-7">
                                                 <label class="col-lg-4 fw-bold text-muted">Waktu Pinjaman : </label>
                                                 <div class="col-lg-8">
-                                                  <span class="fw-bolder fs-6 text-gray-800">{{ data.waktu_peminjaman }}</span>
+                                                  <span class="fw-bolder fs-6 text-gray-800">{{ data.waktu_peminjaman or "-"}}</span>
                                                 </div>
                                               </div>
                                           
@@ -361,11 +403,10 @@
                                               </div>
                                             </div>
                                           </div>
-                                          
                                         <hr style="border: 2px solid #000000;">
                                         <div class="row mb-7">
                                             <label class="col-lg-4 fw-bold fs-3" style="color: black;">
-                                              <i class="fa fa-users fa-2x me-2" style="color: black;"></i> Emergency Contact
+                                              <i class="fa fa-users fa-2x me-2  text-primary"></i> Emergency Contact
                                             </label>
                                         </div>
                                         <div class="row mb-7">
@@ -409,7 +450,66 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+										  <hr style="border: 2px solid #000000;">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="card shadow-sm border rounded p-5 bg-white">
+												<div class="mb-5 border-bottom pb-3 d-flex align-items-center">
+													<i class="fa fa-info-circle fa-2x me-3 text-primary"></i>
+													<h4 class="mb-0 fw-bold text-dark">Additional Information</h4>
+												</div>
+
+												<!-- Info 1 -->
+												<div class="row align-items-start py-4 border-bottom">
+													<div class="col-lg-3 fw-semibold text-muted mb-2">
+														<i class="bi bi-dot text-primary me-1"></i> Additional Information 1:
+													</div>
+													<div class="col-lg-9">
+														<span class="fw-bold text-dark fs-6 px-4 py-2 rounded d-inline-block">
+														{{ data.optional_1 or "-" }}
+														</span>
+													</div>
+												</div>
+
+												<!-- Info 2 -->
+												<div class="row align-items-start py-4 border-bottom">
+													<div class="col-lg-3 fw-semibold text-muted mb-2">
+														<i class="bi bi-dot text-primary me-1"></i> Additional Information 2:
+													</div>
+													<div class="col-lg-9">
+														<span class="fw-bold text-dark fs-6 px-4 py-2 rounded d-inline-block">
+														{{ data.optional_2 or "-" }}
+														</span>
+													</div>
+												</div>
+
+												<!-- Info 3 -->
+												<div class="row align-items-start py-4 border-bottom">
+													<div class="col-lg-3 fw-semibold text-muted mb-2">
+														<i class="bi bi-dot text-primary me-1"></i> Additional Information 3:
+													</div>
+													<div class="col-lg-9">
+														<span class="fw-bold text-dark fs-6 px-4 py-2 rounded d-inline-block">
+														{{ data.optional_3 or "-" }}
+														</span>
+													</div>
+												</div>
+
+												<!-- Info 4 -->
+												<div class="row align-items-start py-4 border-bottom">
+													<div class="col-lg-3 fw-semibold text-muted mb-2">
+														<i class="bi bi-dot text-primary me-1"></i> Additional Information 4:
+													</div>
+													<div class="col-lg-9">
+														<span class="fw-bold text-dark fs-6 px-4 py-2 rounded d-inline-block">
+														{{ data.optional_4 or "-" }}
+														</span>
+													</div>
+												</div>
+
+												</div>
+											</div>
+										</div>                                        
 									</div>
 								</div>
 							</div>

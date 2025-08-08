@@ -13,7 +13,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
 import io
-from sqlalchemy.sql import func
+from sqlalchemy.sql import func, case, asc, desc
 from flask import render_template
 from flask_apscheduler import APScheduler
 from flask import jsonify
@@ -84,8 +84,12 @@ class Data(db.Model):
     tanggal_upload = db.Column(db.DateTime, default=db.func.current_timestamp())
     #user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
-    remark = db.Column(db.String(255), default='not_ptp')
+    remark = db.Column(db.String(255), default='1')
     catatan = db.Column(db.Text)
+    optional_1 = db.Column(db.Text)
+    optional_2 = db.Column(db.Text)
+    optional_3 = db.Column(db.Text)
+    optional_4 = db.Column(db.Text)
 
     #group_rel = db.relationship('User', backref=db.backref('data', lazy=True))  
 
@@ -129,9 +133,9 @@ def log_user_activity():
             return 
         
         current_route = request.path
-        print(f"{current_user.username} mengakses {current_route}")
+        print(f"{current_route}")
 
-        activity_log = f"{current_user.username} mengakses {current_route}"
+        activity_log = f"{current_route}"
         
         new_activity = UserActivity(
             user_id=current_user.id,
@@ -457,7 +461,7 @@ def upload_data():
             df = pd.read_excel(file)
 
             required_columns = [
-                'Order Number', 'Nama Nasabah', 'No HP', 'Alamat', 'Pekerjaan', 'Waktu Peminjaman',
+                'Order Number', 'Nama Nasabah', 'No HP', 'Alamat', 'Pekerjaan',
                 'Total Tagihan', 'Overdue', 
                 'Nama Emergency Contact 1', 'Nomor Emergency Contact 1',
                 'Nama Emergency Contact 2', 'Nomor Emergency Contact 2'
@@ -472,14 +476,32 @@ def upload_data():
                 return redirect(url_for('upload_data'))
 
             for _, row in df.iterrows():
+                waktu_peminjaman = row.get('Waktu Peminjaman')
+                pokok_pinjaman = row.get('Pokok Pinjaman', 0)
+                optional_1 = row.get('Optional 1')
+                optional_2 = row.get('Optional 2')
+                optional_3 = row.get('Optional 3')
+                optional_4 = row.get('Optional 4')
+                
+                if pd.isna(waktu_peminjaman):
+                    waktu_peminjaman = None
+                if pd.isna(pokok_pinjaman):
+                    pokok_pinjaman = None 
+                if pd.isna(optional_1):
+                    optional_1 = None 
+                if pd.isna(optional_2):
+                    optional_2 = None 
+                if pd.isna(optional_3):
+                    optional_3 = None 
+                if pd.isna(optional_4):
+                    optional_4 = None
+
                 data = Data(
                     order_no=row['Order Number'],
                     nama_nasabah=row['Nama Nasabah'],
                     phone=row['No HP'],
                     alamat=row['Alamat'],
-                    waktu_peminjaman=row['Waktu Peminjaman'],
-                    pekerjaan=row['Pekerjaan'],
-                    pokok_pinjaman=row.get('Pokok Pinjaman', 0),  
+                    pekerjaan=row['Pekerjaan'], 
                     total_tagihan=row['Total Tagihan'],
                     overdue=row['Overdue'],
                     nama_ec1=row['Nama Emergency Contact 1'],
@@ -489,8 +511,12 @@ def upload_data():
                     exp_date=exp_date,
                     tanggal_upload=datetime.now(),
                     user_id=user_id,
-                    remark='not_ptp',
-                    catatan=''
+                    remark='1',
+                    catatan='',
+                    optional_1=optional_1,
+                    optional_2=optional_2,
+                    optional_3=optional_3,
+                    optional_4=optional_4
                 )
                 db.session.add(data)
 
@@ -564,10 +590,11 @@ def delete_user_data(id_system):
 
     return redirect(url_for('delete'))
 
+# ADMIN
 @app.route('/my-case')
 @login_required
 def my_case():
-    query = Data.query.filter(Data.remark == 'not_ptp')
+    query = Data.query.filter(Data.remark == '1')
 
     if current_user.role != 'admin':
         flash("Access denied. Only admin can perform this action.", "danger")
@@ -598,6 +625,19 @@ def my_case():
             d.overdue = int(d.overdue)
         except:
             d.overdue = 0
+
+    sort_customer = request.args.get('customer_name')
+    sort_outstanding = request.args.get('outstanding')
+
+    if sort_customer == '1':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower())
+    elif sort_customer == '2':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower(), reverse=True)
+
+    if sort_outstanding == '1':  
+        query_result.sort(key=lambda x: x.total_tagihan_int, reverse=True)
+    elif sort_outstanding == '2':  
+        query_result.sort(key=lambda x: x.total_tagihan_int)
 
     page = request.args.get('page', 1, type=int)
     per_page = 10
@@ -630,7 +670,7 @@ def my_case():
 @app.route('/ptp')
 @login_required
 def ptp():
-    query = Data.query.filter(Data.remark == 'ptp')
+    query = Data.query.filter(Data.remark == '2')
 
     if current_user.role != 'admin':
         return redirect(request.referrer)
@@ -693,6 +733,19 @@ def ptp():
         except:
             d.total_tagihan_int = 0
 
+    sort_customer = request.args.get('customer_name')
+    sort_outstanding = request.args.get('outstanding')
+
+    if sort_customer == '1':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower())
+    elif sort_customer == '2':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower(), reverse=True)
+
+    if sort_outstanding == '1':  
+        query_result.sort(key=lambda x: x.total_tagihan_int, reverse=True)
+    elif sort_outstanding == '2':  
+        query_result.sort(key=lambda x: x.total_tagihan_int)
+
     page = request.args.get('page', 1, type=int)
     per_page = 10
     total = len(query_result)
@@ -707,6 +760,426 @@ def ptp():
 
     return render_template(
         'ptp.html',
+        username=current_user.username,
+        data_list=paginated_data,
+        group=current_user.group,
+        group_name=group_name,
+        id_system=current_user.id_system,
+        current_page=page,
+        total_pages=total_pages,
+        query_params=query_params,
+        num_sip=current_user.num_sip,
+        pas_sip=current_user.pas_sip
+    )
+
+@app.route('/admin/not-active')
+@login_required
+def not_active_admin():
+    query = Data.query.filter(Data.remark == '3')
+
+    if current_user.role != 'admin':
+        return redirect(request.referrer)
+
+    keyword = request.args.get('keyword')
+    if keyword:
+        query = query.filter(
+            or_(
+                Data.order_no.ilike(f"%{keyword}%"),
+                Data.nama_nasabah.ilike(f"%{keyword}%"),
+                Data.phone.ilike(f"%{keyword}%")
+            )
+        )
+
+    min_principal = request.args.get('min_principal', type=int)
+    max_principal = request.args.get('max_principal', type=int)
+    if min_principal is not None or max_principal is not None:
+        all_data = query.all()
+        filtered_data = []
+        for d in all_data:
+            try:
+                pokok = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+                if (
+                    (min_principal is None or pokok >= min_principal) and
+                    (max_principal is None or pokok <= max_principal)
+                ):
+                    d.pokok_pinjaman_int = pokok
+                    filtered_data.append(d)
+            except:
+                continue
+        query_result = filtered_data
+    else:
+        query_result = query.all()
+        for d in query_result:
+            try:
+                d.pokok_pinjaman_int = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+            except:
+                d.pokok_pinjaman_int = 0
+
+    min_overdue = request.args.get('min_overdue', type=int)
+    max_overdue = request.args.get('max_overdue', type=int)
+    if min_overdue is not None or max_overdue is not None:
+        temp = []
+        for d in query_result:
+            try:
+                ovd = int(d.overdue)
+                if (
+                    (min_overdue is None or ovd >= min_overdue) and
+                    (max_overdue is None or ovd <= max_overdue)
+                ):
+                    d.overdue = ovd
+                    temp.append(d)
+            except:
+                continue
+        query_result = temp
+
+    for d in query_result:
+        try:
+            d.total_tagihan_int = int(d.total_tagihan.replace('.', '').replace(',', '').strip())
+        except:
+            d.total_tagihan_int = 0
+
+    sort_customer = request.args.get('customer_name')
+    sort_outstanding = request.args.get('outstanding')
+
+    if sort_customer == '1':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower())
+    elif sort_customer == '2':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower(), reverse=True)
+
+    if sort_outstanding == '1':  
+        query_result.sort(key=lambda x: x.total_tagihan_int, reverse=True)
+    elif sort_outstanding == '2':  
+        query_result.sort(key=lambda x: x.total_tagihan_int)
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    total = len(query_result)
+    total_pages = (total + per_page - 1) // per_page
+    paginated_data = query_result[(page - 1) * per_page: page * per_page]
+
+    query_params = request.args.to_dict()
+    query_params.pop('page', None)
+
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
+    return render_template(
+        'not_active.html',
+        username=current_user.username,
+        data_list=paginated_data,
+        group=current_user.group,
+        group_name=group_name,
+        id_system=current_user.id_system,
+        current_page=page,
+        total_pages=total_pages,
+        query_params=query_params,
+        num_sip=current_user.num_sip,
+        pas_sip=current_user.pas_sip
+    )
+
+@app.route('/admin/no-answer')
+@login_required
+def no_answer_admin():
+    query = Data.query.filter(Data.remark == '4')
+
+    if current_user.role != 'admin':
+        return redirect(request.referrer)
+
+    keyword = request.args.get('keyword')
+    if keyword:
+        query = query.filter(
+            or_(
+                Data.order_no.ilike(f"%{keyword}%"),
+                Data.nama_nasabah.ilike(f"%{keyword}%"),
+                Data.phone.ilike(f"%{keyword}%")
+            )
+        )
+
+    min_principal = request.args.get('min_principal', type=int)
+    max_principal = request.args.get('max_principal', type=int)
+    if min_principal is not None or max_principal is not None:
+        all_data = query.all()
+        filtered_data = []
+        for d in all_data:
+            try:
+                pokok = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+                if (
+                    (min_principal is None or pokok >= min_principal) and
+                    (max_principal is None or pokok <= max_principal)
+                ):
+                    d.pokok_pinjaman_int = pokok
+                    filtered_data.append(d)
+            except:
+                continue
+        query_result = filtered_data
+    else:
+        query_result = query.all()
+        for d in query_result:
+            try:
+                d.pokok_pinjaman_int = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+            except:
+                d.pokok_pinjaman_int = 0
+
+    min_overdue = request.args.get('min_overdue', type=int)
+    max_overdue = request.args.get('max_overdue', type=int)
+    if min_overdue is not None or max_overdue is not None:
+        temp = []
+        for d in query_result:
+            try:
+                ovd = int(d.overdue)
+                if (
+                    (min_overdue is None or ovd >= min_overdue) and
+                    (max_overdue is None or ovd <= max_overdue)
+                ):
+                    d.overdue = ovd
+                    temp.append(d)
+            except:
+                continue
+        query_result = temp
+
+    for d in query_result:
+        try:
+            d.total_tagihan_int = int(d.total_tagihan.replace('.', '').replace(',', '').strip())
+        except:
+            d.total_tagihan_int = 0
+
+    sort_customer = request.args.get('customer_name')
+    sort_outstanding = request.args.get('outstanding')
+
+    if sort_customer == '1':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower())
+    elif sort_customer == '2':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower(), reverse=True)
+
+    if sort_outstanding == '1':  
+        query_result.sort(key=lambda x: x.total_tagihan_int, reverse=True)
+    elif sort_outstanding == '2':  
+        query_result.sort(key=lambda x: x.total_tagihan_int)
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    total = len(query_result)
+    total_pages = (total + per_page - 1) // per_page
+    paginated_data = query_result[(page - 1) * per_page: page * per_page]
+
+    query_params = request.args.to_dict()
+    query_params.pop('page', None)
+
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
+    return render_template(
+        'no_answer.html',
+        username=current_user.username,
+        data_list=paginated_data,
+        group=current_user.group,
+        group_name=group_name,
+        id_system=current_user.id_system,
+        current_page=page,
+        total_pages=total_pages,
+        query_params=query_params,
+        num_sip=current_user.num_sip,
+        pas_sip=current_user.pas_sip
+    )
+
+@app.route('/admin/answer-not-ptp')
+@login_required
+def answer_not_ptp_admin():
+    query = Data.query.filter(Data.remark == '5')
+
+    if current_user.role != 'admin':
+        return redirect(request.referrer)
+
+    keyword = request.args.get('keyword')
+    if keyword:
+        query = query.filter(
+            or_(
+                Data.order_no.ilike(f"%{keyword}%"),
+                Data.nama_nasabah.ilike(f"%{keyword}%"),
+                Data.phone.ilike(f"%{keyword}%")
+            )
+        )
+
+    min_principal = request.args.get('min_principal', type=int)
+    max_principal = request.args.get('max_principal', type=int)
+    if min_principal is not None or max_principal is not None:
+        all_data = query.all()
+        filtered_data = []
+        for d in all_data:
+            try:
+                pokok = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+                if (
+                    (min_principal is None or pokok >= min_principal) and
+                    (max_principal is None or pokok <= max_principal)
+                ):
+                    d.pokok_pinjaman_int = pokok
+                    filtered_data.append(d)
+            except:
+                continue
+        query_result = filtered_data
+    else:
+        query_result = query.all()
+        for d in query_result:
+            try:
+                d.pokok_pinjaman_int = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+            except:
+                d.pokok_pinjaman_int = 0
+
+    min_overdue = request.args.get('min_overdue', type=int)
+    max_overdue = request.args.get('max_overdue', type=int)
+    if min_overdue is not None or max_overdue is not None:
+        temp = []
+        for d in query_result:
+            try:
+                ovd = int(d.overdue)
+                if (
+                    (min_overdue is None or ovd >= min_overdue) and
+                    (max_overdue is None or ovd <= max_overdue)
+                ):
+                    d.overdue = ovd
+                    temp.append(d)
+            except:
+                continue
+        query_result = temp
+
+    for d in query_result:
+        try:
+            d.total_tagihan_int = int(d.total_tagihan.replace('.', '').replace(',', '').strip())
+        except:
+            d.total_tagihan_int = 0
+
+    sort_customer = request.args.get('customer_name')
+    sort_outstanding = request.args.get('outstanding')
+
+    if sort_customer == '1':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower())
+    elif sort_customer == '2':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower(), reverse=True)
+
+    if sort_outstanding == '1':  
+        query_result.sort(key=lambda x: x.total_tagihan_int, reverse=True)
+    elif sort_outstanding == '2':  
+        query_result.sort(key=lambda x: x.total_tagihan_int)
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    total = len(query_result)
+    total_pages = (total + per_page - 1) // per_page
+    paginated_data = query_result[(page - 1) * per_page: page * per_page]
+
+    query_params = request.args.to_dict()
+    query_params.pop('page', None)
+
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
+    return render_template(
+        'answer_not_ptp.html',
+        username=current_user.username,
+        data_list=paginated_data,
+        group=current_user.group,
+        group_name=group_name,
+        id_system=current_user.id_system,
+        current_page=page,
+        total_pages=total_pages,
+        query_params=query_params,
+        num_sip=current_user.num_sip,
+        pas_sip=current_user.pas_sip
+    )
+
+@app.route('/admin/paid')
+@login_required
+def paid_admin():
+    query = Data.query.filter(Data.remark == '6')
+
+    if current_user.role != 'admin':
+        return redirect(request.referrer)
+
+    keyword = request.args.get('keyword')
+    if keyword:
+        query = query.filter(
+            or_(
+                Data.order_no.ilike(f"%{keyword}%"),
+                Data.nama_nasabah.ilike(f"%{keyword}%"),
+                Data.phone.ilike(f"%{keyword}%")
+            )
+        )
+
+    min_principal = request.args.get('min_principal', type=int)
+    max_principal = request.args.get('max_principal', type=int)
+    if min_principal is not None or max_principal is not None:
+        all_data = query.all()
+        filtered_data = []
+        for d in all_data:
+            try:
+                pokok = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+                if (
+                    (min_principal is None or pokok >= min_principal) and
+                    (max_principal is None or pokok <= max_principal)
+                ):
+                    d.pokok_pinjaman_int = pokok
+                    filtered_data.append(d)
+            except:
+                continue
+        query_result = filtered_data
+    else:
+        query_result = query.all()
+        for d in query_result:
+            try:
+                d.pokok_pinjaman_int = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+            except:
+                d.pokok_pinjaman_int = 0
+
+    min_overdue = request.args.get('min_overdue', type=int)
+    max_overdue = request.args.get('max_overdue', type=int)
+    if min_overdue is not None or max_overdue is not None:
+        temp = []
+        for d in query_result:
+            try:
+                ovd = int(d.overdue)
+                if (
+                    (min_overdue is None or ovd >= min_overdue) and
+                    (max_overdue is None or ovd <= max_overdue)
+                ):
+                    d.overdue = ovd
+                    temp.append(d)
+            except:
+                continue
+        query_result = temp
+
+    for d in query_result:
+        try:
+            d.total_tagihan_int = int(d.total_tagihan.replace('.', '').replace(',', '').strip())
+        except:
+            d.total_tagihan_int = 0
+
+    sort_customer = request.args.get('customer_name')
+    sort_outstanding = request.args.get('outstanding')
+
+    if sort_customer == '1':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower())
+    elif sort_customer == '2':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower(), reverse=True)
+
+    if sort_outstanding == '1':  
+        query_result.sort(key=lambda x: x.total_tagihan_int, reverse=True)
+    elif sort_outstanding == '2':  
+        query_result.sort(key=lambda x: x.total_tagihan_int)
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    total = len(query_result)
+    total_pages = (total + per_page - 1) // per_page
+    paginated_data = query_result[(page - 1) * per_page: page * per_page]
+
+    query_params = request.args.to_dict()
+    query_params.pop('page', None)
+
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
+    return render_template(
+        'lunas.html',
         username=current_user.username,
         data_list=paginated_data,
         group=current_user.group,
@@ -746,7 +1219,7 @@ def detail_data(id):
 @app.route('/my-data')
 @login_required
 def my_data():
-    query = Data.query.join(User).join(UserGroup, User.group == UserGroup.id).filter(Data.user_id == current_user.id, Data.remark == "not_ptp")
+    query = Data.query.join(User).join(UserGroup, User.group == UserGroup.id).filter(Data.user_id == current_user.id, Data.remark == "1")
 
     if current_user.role != 'user':
         return redirect(request.referrer)
@@ -789,6 +1262,25 @@ def my_data():
         ):
             query_result.append(d)
 
+    sort_customer = request.args.get('customer_name')
+    sort_principal = request.args.get('principal')
+    sort_outstanding = request.args.get('outstanding')
+
+    if sort_customer == '1':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower())
+    elif sort_customer == '2':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower(), reverse=True)
+
+    if sort_principal == '1':  
+        query_result.sort(key=lambda x: x.pokok_pinjaman_int, reverse=True)
+    elif sort_principal == '2':  
+        query_result.sort(key=lambda x: x.pokok_pinjaman_int)
+
+    if sort_outstanding == '1':  
+        query_result.sort(key=lambda x: x.total_tagihan_int, reverse=True)
+    elif sort_outstanding == '2':  
+        query_result.sort(key=lambda x: x.total_tagihan_int)
+
     page = request.args.get('page', 1, type=int)
     per_page = 10
     total = len(query_result)
@@ -817,6 +1309,472 @@ def my_data():
         pas_sip=current_user.pas_sip
     )
 
+@app.route('/lunas')
+@login_required
+def lunas():
+    query = Data.query.filter(
+        Data.remark == '6',
+        Data.user_id == current_user.id
+    )
+    if current_user.role != 'user':
+        return redirect(request.referrer)
+
+    keyword = request.args.get('keyword')
+    if keyword:
+        query = query.filter(
+            or_(
+                Data.order_no.ilike(f"%{keyword}%"),
+                Data.nama_nasabah.ilike(f"%{keyword}%"),
+                Data.phone.ilike(f"%{keyword}%")
+            )
+        )
+
+    min_principal = request.args.get('min_principal', type=int)
+    max_principal = request.args.get('max_principal', type=int)
+    min_overdue = request.args.get('min_overdue', type=int)
+    max_overdue = request.args.get('max_overdue', type=int)
+
+    query_result = []
+    for d in query:
+        try:
+            d.pokok_pinjaman_int = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+        except:
+            d.pokok_pinjaman_int = 0
+        try:
+            d.total_tagihan_int = int(d.total_tagihan.replace('.', '').replace(',', '').strip())
+        except:
+            d.total_tagihan_int = 0
+        try:
+            d.overdue = int(d.overdue)
+        except:
+            d.overdue = 0
+
+        if (
+            (min_principal is None or d.pokok_pinjaman_int >= min_principal) and
+            (max_principal is None or d.pokok_pinjaman_int <= max_principal) and
+            (min_overdue is None or d.overdue >= min_overdue) and
+            (max_overdue is None or d.overdue <= max_overdue)
+        ):
+            query_result.append(d)
+
+    sort_customer = request.args.get('customer_name')
+    sort_principal = request.args.get('principal')
+    sort_outstanding = request.args.get('outstanding')
+
+    if sort_customer == '1':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower())
+    elif sort_customer == '2':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower(), reverse=True)
+
+    if sort_principal == '1':  
+        query_result.sort(key=lambda x: x.pokok_pinjaman_int, reverse=True)
+    elif sort_principal == '2':  
+        query_result.sort(key=lambda x: x.pokok_pinjaman_int)
+
+    if sort_outstanding == '1':  
+        query_result.sort(key=lambda x: x.total_tagihan_int, reverse=True)
+    elif sort_outstanding == '2':  
+        query_result.sort(key=lambda x: x.total_tagihan_int)
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    total = len(query_result)
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_data = query_result[start:end]
+    total_pages = (total + per_page - 1) // per_page
+
+    query_params = request.args.to_dict()
+    query_params.pop('page', None)
+
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
+    return render_template(
+        'user_lunas.html',
+        username=current_user.username,
+        group=current_user.group,
+        group_name=group_name,
+        id_system=current_user.id_system,
+        data_list=paginated_data,
+        current_page=page,
+        total_pages=total_pages,
+        query_params=query_params,
+        num_sip=current_user.num_sip,
+        pas_sip=current_user.pas_sip
+    )
+
+@app.route('/user-stats')
+@login_required
+def user_stats():
+    if current_user.role != 'admin':
+        return redirect(request.referrer)
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+
+    keyword = request.args.get('keyword', '').strip()
+    sort_option = request.args.get('outstanding') 
+
+    total_users = User.query.filter_by(role='user').count()
+
+    base_query = db.session.query(
+        User.id_system,
+        User.id,
+        User.username,
+        User.email,
+        func.count(Data.id).label('total_data'),
+        func.count(case((Data.remark == '1', 1))).label('remark_1_count'),
+        UserGroup.company.label('company'),
+        User.status
+    ).outerjoin(Data, User.id == Data.user_id
+    ).outerjoin(UserGroup, User.group == UserGroup.id
+    ).filter(User.role == 'user')
+
+    if keyword:
+        base_query = base_query.filter(
+            (User.id_system.ilike(f"%{keyword}%")) |
+            (User.username.ilike(f"%{keyword}%"))
+        )
+
+    grouped_query = base_query.group_by(User.id).subquery()
+
+    if sort_option == '1':  
+        final_query = db.session.query(grouped_query).order_by(desc(grouped_query.c.total_data))
+    elif sort_option == '2':  
+        final_query = db.session.query(grouped_query).order_by(asc(grouped_query.c.total_data))
+    else:
+        final_query = db.session.query(grouped_query)
+
+    total_rows = db.session.query(func.count()).select_from(grouped_query).scalar()
+    total_pages = (total_rows + per_page - 1) // per_page
+    paginated_users = final_query.offset((page - 1) * per_page).limit(per_page).all()
+
+    query_params = request.args.to_dict()
+    query_params.pop('page', None)
+
+    return render_template('user_stats.html',
+                           users=paginated_users,
+                           current_page=page,
+                           total_pages=total_pages,
+                           query_params=query_params,
+                           keyword=keyword,
+                           sort_option=sort_option,
+                           total_users=total_users)
+
+from sqlalchemy import func, case
+
+@app.route('/user/<int:user_id>')
+@login_required
+def user_detail(user_id):
+    if current_user.role != 'admin':
+        return redirect(request.referrer)
+
+    user = User.query.get_or_404(user_id)
+
+    total_data = Data.query.filter_by(user_id=user.id).count()
+    remark_1_count = Data.query.filter_by(user_id=user.id, remark='1').count()
+
+    try:
+        progress_percent = int((remark_1_count / total_data) * 100)
+    except ZeroDivisionError:
+        progress_percent = 0
+
+    return render_template(
+        'user_detail.html',
+        user=user,
+        total_data=total_data,
+        remark_1_count=remark_1_count,
+        progress_percent=progress_percent
+    )
+
+
+@app.route('/not-active')
+@login_required
+def not_active():
+    query = Data.query.filter(
+        Data.remark == '3',
+        Data.user_id == current_user.id
+    )
+    if current_user.role != 'user':
+        return redirect(request.referrer)
+
+    keyword = request.args.get('keyword')
+    if keyword:
+        query = query.filter(
+            or_(
+                Data.order_no.ilike(f"%{keyword}%"),
+                Data.nama_nasabah.ilike(f"%{keyword}%"),
+                Data.phone.ilike(f"%{keyword}%")
+            )
+        )
+
+    min_principal = request.args.get('min_principal', type=int)
+    max_principal = request.args.get('max_principal', type=int)
+    min_overdue = request.args.get('min_overdue', type=int)
+    max_overdue = request.args.get('max_overdue', type=int)
+
+    query_result = []
+    for d in query:
+        try:
+            d.pokok_pinjaman_int = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+        except:
+            d.pokok_pinjaman_int = 0
+        try:
+            d.total_tagihan_int = int(d.total_tagihan.replace('.', '').replace(',', '').strip())
+        except:
+            d.total_tagihan_int = 0
+        try:
+            d.overdue = int(d.overdue)
+        except:
+            d.overdue = 0
+
+        if (
+            (min_principal is None or d.pokok_pinjaman_int >= min_principal) and
+            (max_principal is None or d.pokok_pinjaman_int <= max_principal) and
+            (min_overdue is None or d.overdue >= min_overdue) and
+            (max_overdue is None or d.overdue <= max_overdue)
+        ):
+            query_result.append(d)
+
+    sort_customer = request.args.get('customer_name')
+    sort_principal = request.args.get('principal')
+    sort_outstanding = request.args.get('outstanding')
+
+    if sort_customer == '1':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower())
+    elif sort_customer == '2':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower(), reverse=True)
+
+    if sort_principal == '1':  
+        query_result.sort(key=lambda x: x.pokok_pinjaman_int, reverse=True)
+    elif sort_principal == '2':  
+        query_result.sort(key=lambda x: x.pokok_pinjaman_int)
+
+    if sort_outstanding == '1':  
+        query_result.sort(key=lambda x: x.total_tagihan_int, reverse=True)
+    elif sort_outstanding == '2':  
+        query_result.sort(key=lambda x: x.total_tagihan_int)
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    total = len(query_result)
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_data = query_result[start:end]
+    total_pages = (total + per_page - 1) // per_page
+
+    query_params = request.args.to_dict()
+    query_params.pop('page', None)
+
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
+    return render_template(
+        'user_not_active.html',
+        username=current_user.username,
+        group=current_user.group,
+        group_name=group_name,
+        id_system=current_user.id_system,
+        data_list=paginated_data,
+        current_page=page,
+        total_pages=total_pages,
+        query_params=query_params,
+        num_sip=current_user.num_sip,
+        pas_sip=current_user.pas_sip
+    )
+
+@app.route('/no-answer')
+@login_required
+def no_answer():
+    query = Data.query.filter(
+        Data.remark == '4',
+        Data.user_id == current_user.id
+    )
+    if current_user.role != 'user':
+        return redirect(request.referrer)
+
+    keyword = request.args.get('keyword')
+    if keyword:
+        query = query.filter(
+            or_(
+                Data.order_no.ilike(f"%{keyword}%"),
+                Data.nama_nasabah.ilike(f"%{keyword}%"),
+                Data.phone.ilike(f"%{keyword}%")
+            )
+        )
+
+    min_principal = request.args.get('min_principal', type=int)
+    max_principal = request.args.get('max_principal', type=int)
+    min_overdue = request.args.get('min_overdue', type=int)
+    max_overdue = request.args.get('max_overdue', type=int)
+
+    query_result = []
+    for d in query:
+        try:
+            d.pokok_pinjaman_int = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+        except:
+            d.pokok_pinjaman_int = 0
+        try:
+            d.total_tagihan_int = int(d.total_tagihan.replace('.', '').replace(',', '').strip())
+        except:
+            d.total_tagihan_int = 0
+        try:
+            d.overdue = int(d.overdue)
+        except:
+            d.overdue = 0
+
+        if (
+            (min_principal is None or d.pokok_pinjaman_int >= min_principal) and
+            (max_principal is None or d.pokok_pinjaman_int <= max_principal) and
+            (min_overdue is None or d.overdue >= min_overdue) and
+            (max_overdue is None or d.overdue <= max_overdue)
+        ):
+            query_result.append(d)
+
+    sort_customer = request.args.get('customer_name')
+    sort_principal = request.args.get('principal')
+    sort_outstanding = request.args.get('outstanding')
+
+    if sort_customer == '1':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower())
+    elif sort_customer == '2':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower(), reverse=True)
+
+    if sort_principal == '1':  
+        query_result.sort(key=lambda x: x.pokok_pinjaman_int, reverse=True)
+    elif sort_principal == '2':  
+        query_result.sort(key=lambda x: x.pokok_pinjaman_int)
+
+    if sort_outstanding == '1':  
+        query_result.sort(key=lambda x: x.total_tagihan_int, reverse=True)
+    elif sort_outstanding == '2':  
+        query_result.sort(key=lambda x: x.total_tagihan_int)
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    total = len(query_result)
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_data = query_result[start:end]
+    total_pages = (total + per_page - 1) // per_page
+
+    query_params = request.args.to_dict()
+    query_params.pop('page', None)
+
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
+    return render_template(
+        'user_no_answer.html',
+        username=current_user.username,
+        group=current_user.group,
+        group_name=group_name,
+        id_system=current_user.id_system,
+        data_list=paginated_data,
+        current_page=page,
+        total_pages=total_pages,
+        query_params=query_params,
+        num_sip=current_user.num_sip,
+        pas_sip=current_user.pas_sip
+    )
+
+@app.route('/answer-no-ptp')
+@login_required
+def answer_no_ptp():
+    query = Data.query.filter(
+        Data.remark == '5',
+        Data.user_id == current_user.id
+    )
+    if current_user.role != 'user':
+        return redirect(request.referrer)
+
+    keyword = request.args.get('keyword')
+    if keyword:
+        query = query.filter(
+            or_(
+                Data.order_no.ilike(f"%{keyword}%"),
+                Data.nama_nasabah.ilike(f"%{keyword}%"),
+                Data.phone.ilike(f"%{keyword}%")
+            )
+        )
+
+    min_principal = request.args.get('min_principal', type=int)
+    max_principal = request.args.get('max_principal', type=int)
+    min_overdue = request.args.get('min_overdue', type=int)
+    max_overdue = request.args.get('max_overdue', type=int)
+
+    query_result = []
+    for d in query:
+        try:
+            d.pokok_pinjaman_int = int(d.pokok_pinjaman.replace('.', '').replace(',', '').strip())
+        except:
+            d.pokok_pinjaman_int = 0
+        try:
+            d.total_tagihan_int = int(d.total_tagihan.replace('.', '').replace(',', '').strip())
+        except:
+            d.total_tagihan_int = 0
+        try:
+            d.overdue = int(d.overdue)
+        except:
+            d.overdue = 0
+
+        if (
+            (min_principal is None or d.pokok_pinjaman_int >= min_principal) and
+            (max_principal is None or d.pokok_pinjaman_int <= max_principal) and
+            (min_overdue is None or d.overdue >= min_overdue) and
+            (max_overdue is None or d.overdue <= max_overdue)
+        ):
+            query_result.append(d)
+
+    sort_customer = request.args.get('customer_name')
+    sort_principal = request.args.get('principal')
+    sort_outstanding = request.args.get('outstanding')
+
+    if sort_customer == '1':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower())
+    elif sort_customer == '2':  
+        query_result.sort(key=lambda x: x.nama_nasabah.lower(), reverse=True)
+
+    if sort_principal == '1':  
+        query_result.sort(key=lambda x: x.pokok_pinjaman_int, reverse=True)
+    elif sort_principal == '2':  
+        query_result.sort(key=lambda x: x.pokok_pinjaman_int)
+
+    if sort_outstanding == '1':  
+        query_result.sort(key=lambda x: x.total_tagihan_int, reverse=True)
+    elif sort_outstanding == '2':  
+        query_result.sort(key=lambda x: x.total_tagihan_int)
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    total = len(query_result)
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_data = query_result[start:end]
+    total_pages = (total + per_page - 1) // per_page
+
+    query_params = request.args.to_dict()
+    query_params.pop('page', None)
+
+    group_obj = UserGroup.query.filter_by(id=current_user.group).first()
+    group_name = group_obj.company if group_obj else 'N/A'
+
+    return render_template(
+        'user_answer_no_ptp.html',
+        username=current_user.username,
+        group=current_user.group,
+        group_name=group_name,
+        id_system=current_user.id_system,
+        data_list=paginated_data,
+        current_page=page,
+        total_pages=total_pages,
+        query_params=query_params,
+        num_sip=current_user.num_sip,
+        pas_sip=current_user.pas_sip
+    )
+
+
 @app.route('/call')
 @login_required
 def call():
@@ -836,7 +1794,7 @@ def call():
 @login_required
 def user_ptp():
     query = Data.query.filter(
-        Data.remark == 'ptp',
+        Data.remark == '2',
         Data.user_id == current_user.id
     )
 
@@ -986,7 +1944,7 @@ def submit_call():
     data = Data.query.filter_by(id=data_id, user_id=current_user.id).first()
     if not data:
         flash('Data tidak ditemukan atau tidak sesuai.', 'error')
-        return redirect(url_for('my_data'))
+        return redirect(request.referrer or url_for('my_data'))
 
     data.remark = remark
     if note is not None:
@@ -994,7 +1952,7 @@ def submit_call():
     db.session.commit()
 
     flash('Data berhasil diperbarui.', 'success')
-    return redirect(url_for('my_data'))
+    return redirect(request.referrer or url_for('my_data'))
 
 @app.route('/admin-submit-call', methods=['POST'])
 @login_required
@@ -1083,4 +2041,4 @@ def log_user():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, port=5000, host='0.0.0.0')  
+    app.run(debug=True, port=5008, host='0.0.0.0')  
